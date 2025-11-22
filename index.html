@@ -5,161 +5,42 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Skrining TBC — eSCare</title>
     <style>
-        :root{
-            --bg:#f4f7fb;
-            --card:#ffffff;
-            --accent:#2b7a78; /* teal-ish health color */
-            --accent-2:#d9534f; /* alert / TB attention */
-            --muted:#6b7280;
-            --radius:12px;
-            --shadow: 0 6px 22px rgba(16,24,40,0.08);
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-        }
+        :root{--bg:#f4f7fb;--card:#fff;--accent:#2b7a78;--accent-2:#d9534f;--muted:#6b7280;--radius:12px;--shadow:0 6px 22px rgba(16,24,40,0.08)}
         *{box-sizing:border-box}
-        html,body{height:100%}
-        body{
-            margin:0;
-            background: linear-gradient(180deg, #e8f7f6 0%, var(--bg) 100%);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:24px;
-            color:#0f172a;
-        }
-        .wrap{
-            width:100%;
-            max-width:820px;
-        }
-        .card{
-            background:var(--card);
-            border-radius:var(--radius);
-            padding:28px;
-            box-shadow:var(--shadow);
-            overflow:hidden;
-        }
-        header{
-            display:flex;
-            gap:16px;
-            align-items:center;
-            margin-bottom:18px;
-        }
-        .logo{
-            width:56px;
-            height:56px;
-            background:linear-gradient(135deg,var(--accent),#4aa6a4);
-            border-radius:12px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:white;
-            flex:0 0 56px;
-            box-shadow:0 6px 18px rgba(43,122,120,0.18);
-        }
-        .logo svg{width:30px;height:30px}
-        h1{
-            font-size:18px;
-            margin:0;
-            line-height:1.05;
-        }
-        p.lead{
-            margin:4px 0 0 0;
-            font-size:13px;
-            color:var(--muted);
-        }
-
-        /* progress */
-        .progress{
-            margin:18px 0 24px 0;
-            display:flex;
-            gap:10px;
-            align-items:center;
-        }
-        .step{
-            flex:1;
-            height:10px;
-            background:#eef2f5;
-            border-radius:10px;
-            position:relative;
-            overflow:hidden;
-        }
-        .step .bar{
-            height:100%;
-            width:0%;
-            background:linear-gradient(90deg,var(--accent),#4aa6a4);
-            transition:width .35s ease;
-        }
-        .step-labels{
-            display:flex;
-            gap:10px;
-            justify-content:space-between;
-            font-size:12px;
-            color:var(--muted);
-            margin-bottom:8px;
-        }
-
-        form .section{
-            display:none;
-            animation:fade .25s ease;
-        }
+        body{margin:0;background:linear-gradient(180deg,#e8f7f6 0%,var(--bg) 100%);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#0f172a;display:flex;align-items:center;justify-content:center;padding:24px;min-height:100vh}
+        .wrap{width:100%;max-width:820px}
+        .card{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+        header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+        .logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),#4aa6a4);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 56px}
+        h1{font-size:18px;margin:0}
+        p.lead{margin:4px 0 0 0;font-size:13px;color:var(--muted)}
+        .step-labels{display:flex;gap:10px;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px}
+        .progress{display:flex;gap:10px;margin-bottom:16px}
+        .step{flex:1;height:10px;background:#eef2f5;border-radius:10px;overflow:hidden}
+        .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#4aa6a4);transition:width .35s}
+        form .section{display:none}
         form .section.active{display:block}
-
-        @keyframes fade{from{opacity:0}to{opacity:1}}
-
-        .grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:12px;
-        }
-        .field{
-            display:flex;
-            flex-direction:column;
-            gap:6px;
-            margin-bottom:12px;
-        }
-        label{font-weight:600;font-size:13px;color:#0f172a}
-        .muted{font-size:13px;color:var(--muted);font-weight:500}
-
-        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea, select{
-            padding:10px 12px;
-            border-radius:8px;
-            border:1px solid #e6e9ee;
-            background:#fff;
-            font-size:14px;
-            color:#0f172a;
-        }
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+        label{font-weight:600;font-size:13px}
+        input, textarea, select{padding:10px;border-radius:8px;border:1px solid #e6e9ee;font-size:14px}
         textarea{min-height:90px;resize:vertical}
-        .full{grid-column:1/ -1}
-
+        .full{grid-column:1 / -1}
         .choices{display:flex;gap:8px;flex-wrap:wrap}
-        .chip{
-            padding:8px 12px;border-radius:999px;border:1px solid #e6e9ee;background:#fff;cursor:pointer;font-size:13px;color:#111;
-        }
-        .chip.active{background:var(--accent);color:white;border-color:transparent;box-shadow:0 6px 16px rgba(43,122,120,0.14)}
-
+        .chip{padding:8px 12px;border-radius:999px;border:1px solid #e6e9ee;background:#fff;cursor:pointer}
+        .chip.active{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(43,122,120,0.14)}
         .buttons{display:flex;gap:12px;justify-content:space-between;margin-top:16px;align-items:center}
-        .btn{
-            padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer;
-        }
+        .btn{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
         .btn.secondary{background:#f3f4f6;color:#111;border:1px solid #e6e9ee}
-        .btn.primary{background:var(--accent);color:white;box-shadow: 0 8px 26px rgba(43,122,120,0.14)}
-        .btn.warn{background:var(--accent-2);color:white}
-
+        .btn.primary{background:var(--accent);color:#fff;box-shadow:0 8px 26px rgba(43,122,120,0.14)}
+        .btn.warn{background:var(--accent-2);color:#fff}
         .note{font-size:13px;color:var(--muted)}
-
-        .message{
-            display:none;padding:12px;border-radius:8px;margin-top:12px;font-weight:600;
-        }
+        .message{display:none;padding:12px;border-radius:8px;margin-top:12px;font-weight:600}
         .message.show{display:block}
         .message.success{background:#ecf9f6;color:#0b5b53}
         .message.error{background:#fff3f2;color:#7a271f}
-
         footer{margin-top:10px;font-size:12px;color:var(--muted);text-align:center}
-
-        @media (max-width:720px){
-            .grid{grid-template-columns:1fr}
-            header{gap:12px}
-            .logo{width:48px;height:48px;flex:0 0 48px}
-        }
+        @media (max-width:720px){.grid{grid-template-columns:1fr}.logo{width:48px;height:48px}}
     </style>
 </head>
 <body>
@@ -167,7 +48,6 @@
         <div class="card" role="main" aria-labelledby="title">
             <header>
                 <div class="logo" aria-hidden="true">
-                    <!-- simple lungs icon -->
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M9 3c0 3-2 6-5 6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M15 3c0 3 2 6 5 6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -176,176 +56,62 @@
                 </div>
                 <div>
                     <h1 id="title">Skrining TBC — eSCare</h1>
-                    <p class="lead">Form singkat untuk skrining gejala TBC. Isi semua bagian untuk melanjutkan.</p>
+                    <p class="lead">Form singkat — isi Data Diri, Gejala Utama, Keluhan, Informasi Lain.</p>
                 </div>
             </header>
 
             <div class="step-labels" aria-hidden="true">
-                <span>Data Diri</span>
-                <span>Gejala Utama</span>
-                <span>Keluhan</span>
-                <span>Informasi Lain</span>
+                <span>Data Diri</span><span>Gejala Utama</span><span>Keluhan</span><span>Informasi Lain</span>
             </div>
             <div class="progress" aria-hidden="true">
-                <div class="step"><div class="bar" style="width:100%" data-step="0"></div></div>
-                <div class="step"><div class="bar" style="width:0%" data-step="1"></div></div>
-                <div class="step"><div class="bar" style="width:0%" data-step="2"></div></div>
-                <div class="step"><div class="bar" style="width:0%" data-step="3"></div></div>
+                <div class="step"><div class="bar" data-step="0" style="width:100%"></div></div>
+                <div class="step"><div class="bar" data-step="1"></div></div>
+                <div class="step"><div class="bar" data-step="2"></div></div>
+                <div class="step"><div class="bar" data-step="3"></div></div>
             </div>
 
             <form id="tbForm" autocomplete="off">
-                <!-- SECTION 1: Data Diri -->
                 <section class="section active" data-index="0" aria-label="Data Diri">
                     <div class="grid">
-                        <div class="field full">
-                            <label for="name">Nama Lengkap <span style="color:#d9534f">*</span></label>
-                            <input id="name" name="name" type="text" required placeholder="Nama pasien" />
-                        </div>
-                        <div class="field">
-                            <label for="age">Usia (tahun) <span style="color:#d9534f">*</span></label>
-                            <input id="age" name="age" type="number" min="0" required placeholder="contoh: 35" />
-                        </div>
-                        <div class="field">
-                            <label for="gender">Jenis Kelamin <span style="color:#d9534f">*</span></label>
-                            <select id="gender" name="gender" required>
-                                <option value="">Pilih</option>
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="phone">Nomor Telepon</label>
-                            <input id="phone" name="phone" type="tel" placeholder="+62..." />
-                        </div>
-                        <div class="field full">
-                            <label for="address">Alamat / Kota</label>
-                            <input id="address" name="address" type="text" placeholder="Contoh: Jakarta Selatan" />
-                        </div>
+                        <div class="field full"><label for="name">Nama Lengkap <span style="color:#d9534f">*</span></label><input id="name" name="name" type="text" required placeholder="Nama pasien" /></div>
+                        <div class="field"><label for="age">Usia (tahun) <span style="color:#d9534f">*</span></label><input id="age" name="age" type="number" min="0" required placeholder="35" /></div>
+                        <div class="field"><label for="gender">Jenis Kelamin <span style="color:#d9534f">*</span></label><select id="gender" name="gender" required><option value="">Pilih</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option><option value="Lainnya">Lainnya</option></select></div>
+                        <div class="field"><label for="phone">Nomor Telepon</label><input id="phone" name="phone" type="tel" placeholder="+62..." /></div>
+                        <div class="field full"><label for="address">Alamat / Kota</label><input id="address" name="address" type="text" placeholder="Contoh: Jakarta Selatan" /></div>
                     </div>
                     <p class="note">Kolom bertanda * wajib diisi.</p>
                 </section>
 
-                <!-- SECTION 2: Gejala Utama -->
                 <section class="section" data-index="1" aria-label="Gejala Utama">
                     <div class="grid">
-                        <div class="field full">
-                            <label>Batuk > 2 minggu?</label>
-                            <div class="choices" role="radiogroup" aria-labelledby="coughLabel">
-                                <button type="button" class="chip" data-name="cough_long" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="cough_long" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Batuk berdarah (hemoptisis)?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="cough_blood" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="cough_blood" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Demam > 2 minggu?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="fever_long" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="fever_long" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Malam berkeringat berlebihan?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="night_sweats" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="night_sweats" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field full">
-                            <label>Penurunan berat badan yang tidak dapat dijelaskan?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="weight_loss" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="weight_loss" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
+                        <div class="field full"><label>Batuk > 2 minggu?</label><div class="choices"><button type="button" class="chip" data-name="cough_long" data-value="Ya">Ya</button><button type="button" class="chip" data-name="cough_long" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field"><label>Batuk berdarah?</label><div class="choices"><button type="button" class="chip" data-name="cough_blood" data-value="Ya">Ya</button><button type="button" class="chip" data-name="cough_blood" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field"><label>Demam > 2 minggu?</label><div class="choices"><button type="button" class="chip" data-name="fever_long" data-value="Ya">Ya</button><button type="button" class="chip" data-name="fever_long" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field"><label>Malam berkeringat?</label><div class="choices"><button type="button" class="chip" data-name="night_sweats" data-value="Ya">Ya</button><button type="button" class="chip" data-name="night_sweats" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field full"><label>Penurunan berat badan?</label><div class="choices"><button type="button" class="chip" data-name="weight_loss" data-value="Ya">Ya</button><button type="button" class="chip" data-name="weight_loss" data-value="Tidak">Tidak</button></div></div>
                     </div>
                 </section>
 
-                <!-- SECTION 3: Keluhan -->
                 <section class="section" data-index="2" aria-label="Keluhan">
                     <div class="grid">
-                        <div class="field full">
-                            <label for="complaint">Deskripsikan keluhan pasien</label>
-                            <textarea id="complaint" name="complaint" placeholder="Tuliskan keluhan, durasi, atau catatan tambahan..."></textarea>
-                        </div>
-
-                        <div class="field">
-                            <label for="severity">Tingkat keparahan</label>
-                            <select id="severity" name="severity">
-                                <option value="">Pilih</option>
-                                <option value="Ringan">Ringan</option>
-                                <option value="Sedang">Sedang</option>
-                                <option value="Berat">Berat</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label for="other_symptoms">Gejala lain</label>
-                            <input id="other_symptoms" name="other_symptoms" type="text" placeholder="mis. sesak napas, nyeri dada" />
-                        </div>
+                        <div class="field full"><label for="complaint">Deskripsikan keluhan pasien</label><textarea id="complaint" name="complaint" placeholder="Tuliskan keluhan, durasi..."></textarea></div>
+                        <div class="field"><label for="severity">Tingkat keparahan</label><select id="severity" name="severity"><option value="">Pilih</option><option value="Ringan">Ringan</option><option value="Sedang">Sedang</option><option value="Berat">Berat</option></select></div>
+                        <div class="field"><label for="other_symptoms">Gejala lain</label><input id="other_symptoms" name="other_symptoms" type="text" placeholder="mis. sesak napas" /></div>
                     </div>
                 </section>
 
-                <!-- SECTION 4: Informasi Lain -->
                 <section class="section" data-index="3" aria-label="Informasi Lain">
                     <div class="grid">
-                        <div class="field">
-                            <label>Riwayat TB sebelumnya?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="prior_tb" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="prior_tb" data-value="Tidak">Tidak</button>
-                                <button type="button" class="chip" data-name="prior_tb" data-value="Tidak Tahu">Tidak Tahu</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Kontak dengan penderita TB?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="contact_tb" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="contact_tb" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Perokok saat ini?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="smoker" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="smoker" data-value="Tidak">Tidak</button>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>Sudah mendapat BCG?</label>
-                            <div class="choices">
-                                <button type="button" class="chip" data-name="bcg" data-value="Ya">Ya</button>
-                                <button type="button" class="chip" data-name="bcg" data-value="Tidak">Tidak</button>
-                                <button type="button" class="chip" data-name="bcg" data-value="Tidak Tahu">Tidak Tahu</button>
-                            </div>
-                        </div>
-
-                        <div class="field full">
-                            <label for="exam_date">Tanggal Pemeriksaan</label>
-                            <input id="exam_date" name="exam_date" type="text" readonly />
-                        </div>
-
-                        <div class="field full">
-                            <label for="notes">Catatan Tambahan</label>
-                            <textarea id="notes" name="notes" placeholder="Catatan petugas atau keterangan lain..."></textarea>
-                        </div>
+                        <div class="field"><label>Riwayat TB sebelumnya?</label><div class="choices"><button type="button" class="chip" data-name="prior_tb" data-value="Ya">Ya</button><button type="button" class="chip" data-name="prior_tb" data-value="Tidak">Tidak</button><button type="button" class="chip" data-name="prior_tb" data-value="Tidak Tahu">Tidak Tahu</button></div></div>
+                        <div class="field"><label>Kontak dengan penderita TB?</label><div class="choices"><button type="button" class="chip" data-name="contact_tb" data-value="Ya">Ya</button><button type="button" class="chip" data-name="contact_tb" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field"><label>Perokok saat ini?</label><div class="choices"><button type="button" class="chip" data-name="smoker" data-value="Ya">Ya</button><button type="button" class="chip" data-name="smoker" data-value="Tidak">Tidak</button></div></div>
+                        <div class="field"><label>Sudah mendapat BCG?</label><div class="choices"><button type="button" class="chip" data-name="bcg" data-value="Ya">Ya</button><button type="button" class="chip" data-name="bcg" data-value="Tidak">Tidak</button><button type="button" class="chip" data-name="bcg" data-value="Tidak Tahu">Tidak Tahu</button></div></div>
+                        <div class="field full"><label for="exam_date">Tanggal Pemeriksaan</label><input id="exam_date" name="exam_date" type="text" readonly /></div>
+                        <div class="field full"><label for="notes">Catatan Tambahan</label><textarea id="notes" name="notes" placeholder="Catatan petugas..."></textarea></div>
                     </div>
                 </section>
 
-                <div class="buttons" role="group" aria-label="Navigasi Form">
+                <div class="buttons" role="group" aria-label="Navigasi">
                     <button type="button" class="btn secondary" id="btnBack" style="visibility:hidden">← Kembali</button>
                     <div style="flex:1"></div>
                     <button type="button" class="btn warn" id="btnSaveDraft">Simpan Draft</button>
@@ -355,19 +121,22 @@
                 <div id="message" class="message"></div>
             </form>
 
-            <footer>
-                Form ini untuk keperluan skrining TBC. Data akan tersimpan ke Google Sheets.
-            </footer>
+            <footer>Form ini untuk skrining TBC. Data akan disimpan ke Google Sheets.</footer>
         </div>
     </div>
 
+    <!-- Hidden iframe dan form (dipakai untuk mengirim ke Google Apps Script tanpa preflight) -->
+    <iframe name="gs-iframe" id="gs-iframe" style="display:none;"></iframe>
+    <form id="gs-hidden-form" action="" method="post" target="gs-iframe" style="display:none;">
+        <input type="hidden" name="sheetName" value="TB_Screening" />
+        <input type="hidden" name="values" value="" />
+    </form>
+
     <script>
         // CONFIG: ganti jika perlu
+        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbzA-fQ4nUrsDuhl07MPypboYtGRqWailTy1emKckmbUopgB1En8V9TAO4t0fqCkEnh1/exec';
         const sheetName = 'TB_Screening';
-        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbza2k2uKbXVLFewIxcfrF3y9KIavroxqpuwaxPM68LG3-3cd8sAQfGyPHlHu9qIVvRktQ/exec';
-        // akhir konfigurasi
-
-        // UI state
+        // UI
         const sections = Array.from(document.querySelectorAll('.section'));
         const bars = Array.from(document.querySelectorAll('.bar'));
         const btnNext = document.getElementById('btnNext');
@@ -375,103 +144,80 @@
         const btnSaveDraft = document.getElementById('btnSaveDraft');
         const msgBox = document.getElementById('message');
         const examDate = document.getElementById('exam_date');
+        const hiddenForm = document.getElementById('gs-hidden-form');
+        const hiddenValuesInput = hiddenForm.querySelector('input[name="values"]');
+        hiddenForm.action = googleAppsScriptUrl;
 
         let current = 0;
 
         function setExamDate(){
             const d = new Date();
-            const iso = d.toISOString().split('T')[0];
-            examDate.value = iso;
+            examDate.value = d.toISOString().split('T')[0];
         }
 
         function showMessage(text, type='success'){
             msgBox.textContent = text;
             msgBox.className = `message show ${type==='success'?'success':'error'}`;
-            setTimeout(()=> {
-                msgBox.classList.remove('show');
-            }, 3500);
+            setTimeout(()=> msgBox.classList.remove('show'), 3500);
         }
 
         function showStep(i){
             sections.forEach(s=> s.classList.remove('active'));
             sections[i].classList.add('active');
-            bars.forEach((b,idx) => {
-                b.style.width = (idx <= i ? '100%':'0%');
-            });
+            bars.forEach((b, idx)=> b.style.width = (idx <= i ? '100%':'0%'));
             btnBack.style.visibility = i===0 ? 'hidden' : 'visible';
-            btnNext.textContent = i === sections.length-1 ? 'Kirim' : 'Selanjutnya →';
+            btnNext.textContent = i === sections.length -1 ? 'Kirim' : 'Selanjutnya →';
         }
 
-        // choice chips logic
+        // chips behavior
         document.querySelectorAll('.chip').forEach(chip=>{
-            chip.addEventListener('click',(e)=>{
+            chip.addEventListener('click', ()=> {
                 const name = chip.dataset.name;
-                const val = chip.dataset.value;
-                // deactivate other chips with same name
-                document.querySelectorAll(`.chip[data-name="${name}"]`).forEach(c => c.classList.remove('active'));
-                // activate clicked
+                // single-select per group
+                document.querySelectorAll(`.chip[data-name="${name}"]`).forEach(c=> c.classList.remove('active'));
                 chip.classList.add('active');
-                // store into a hidden input (create if not exists)
-                let input = document.querySelector(`input[name="${name}"]`);
-                if(!input){
-                    input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = name;
-                    document.getElementById('tbForm').appendChild(input);
-                }
-                input.value = val;
+                // set hidden input in form if needed (we will gather later)
             });
         });
 
-        btnNext.addEventListener('click', async () => {
+        btnNext.addEventListener('click', ()=> {
             if(current < sections.length -1){
-                // validate required fields in current section
                 if(!validateSection(current)) return;
                 current++;
                 showStep(current);
             } else {
-                // on last step -> submit
                 if(!validateSection(current)) return;
-                await submitForm();
+                submitViaIframe();
             }
         });
 
-        btnBack.addEventListener('click', ()=>{
-            if(current > 0){
-                current--;
-                showStep(current);
-            }
+        btnBack.addEventListener('click', ()=> {
+            if(current>0){ current--; showStep(current); }
         });
 
         btnSaveDraft.addEventListener('click', ()=>{
-            // save current values to localStorage for quick draft
             const data = gatherData();
             localStorage.setItem('tb_form_draft', JSON.stringify(data));
             showMessage('Draft disimpan secara lokal', 'success');
         });
 
-        // populate exam date and draft
         document.addEventListener('DOMContentLoaded', ()=>{
             setExamDate();
             setReportDateInputs();
             const draft = localStorage.getItem('tb_form_draft');
-            if(draft){
-                try{
-                    const obj = JSON.parse(draft);
-                    restoreDraft(obj);
-                }catch(e){}
+            if(draft) {
+                try{ restoreDraft(JSON.parse(draft)); } catch(e){}
             }
+            showStep(current);
         });
 
         function setReportDateInputs(){
-            const d = new Date();
-            const iso = d.toISOString().split('T')[0];
+            const iso = new Date().toISOString().split('T')[0];
             document.querySelectorAll('input[readonly]').forEach(i => { if(i.name==='exam_date') i.value = iso; });
         }
 
         function validateSection(idx){
             const sec = sections[idx];
-            // find required inputs inside this section
             const reqs = sec.querySelectorAll('input[required], select[required], textarea[required]');
             for(const el of reqs){
                 if(!el.value || el.value.trim()===''){
@@ -480,23 +226,14 @@
                     return false;
                 }
             }
-            // also check chips in section: if there are chips groups in this section, at least one per group must be selected
-            const chipGroups = Array.from(new Set(Array.from(sec.querySelectorAll('.chip')).map(c=>c.dataset.name)));
-            for(const group of chipGroups){
-                const hidden = document.querySelector(`input[name="${group}"]`);
-                if(!hidden){
-                    // not selected
-                    // NOTE: we allow chips to be optional; if you want to force selection, uncomment below
-                    // showMessage('Mohon pilih opsi pada beberapa pertanyaan.', 'error'); return false;
-                }
-            }
             return true;
         }
 
         function gatherData(){
-            const form = document.getElementById('tbForm');
-            const fd = new FormData(form);
-            // ensure presence of choice fields (read from hidden inputs)
+            const fd = new FormData(document.getElementById('tbForm'));
+            // include chips
+            const chipGroups = {};
+            document.querySelectorAll('.chip.active').forEach(c => { chipGroups[c.dataset.name] = c.dataset.value; });
             const data = {
                 timestamp: new Date().toLocaleString(),
                 name: (fd.get('name') || '').trim(),
@@ -504,18 +241,18 @@
                 gender: fd.get('gender') || '',
                 phone: fd.get('phone') || '',
                 address: fd.get('address') || '',
-                cough_long: fd.get('cough_long') || '',
-                cough_blood: fd.get('cough_blood') || '',
-                fever_long: fd.get('fever_long') || '',
-                night_sweats: fd.get('night_sweats') || '',
-                weight_loss: fd.get('weight_loss') || '',
+                cough_long: chipGroups['cough_long'] || '',
+                cough_blood: chipGroups['cough_blood'] || '',
+                fever_long: chipGroups['fever_long'] || '',
+                night_sweats: chipGroups['night_sweats'] || '',
+                weight_loss: chipGroups['weight_loss'] || '',
                 complaint: fd.get('complaint') || '',
                 severity: fd.get('severity') || '',
                 other_symptoms: fd.get('other_symptoms') || '',
-                prior_tb: fd.get('prior_tb') || '',
-                contact_tb: fd.get('contact_tb') || '',
-                smoker: fd.get('smoker') || '',
-                bcg: fd.get('bcg') || '',
+                prior_tb: chipGroups['prior_tb'] || '',
+                contact_tb: chipGroups['contact_tb'] || '',
+                smoker: chipGroups['smoker'] || '',
+                bcg: chipGroups['bcg'] || '',
                 exam_date: fd.get('exam_date') || '',
                 notes: fd.get('notes') || ''
             };
@@ -533,99 +270,61 @@
                 if(obj.severity) document.getElementById('severity').value = obj.severity;
                 if(obj.other_symptoms) document.getElementById('other_symptoms').value = obj.other_symptoms;
                 if(obj.notes) document.getElementById('notes').value = obj.notes;
-                // restore chips
                 ['cough_long','cough_blood','fever_long','night_sweats','weight_loss','prior_tb','contact_tb','smoker','bcg'].forEach(name=>{
                     if(obj[name]){
                         const el = document.querySelector(`.chip[data-name="${name}"][data-value="${obj[name]}"]`);
-                        if(el){ el.classList.add('active'); let i = document.createElement('input'); i.type='hidden'; i.name=name; i.value = obj[name]; document.getElementById('tbForm').appendChild(i); }
+                        if(el) el.classList.add('active');
                     }
                 });
             }catch(e){}
         }
 
-        async function submitForm(){
+        // --------- IFRAME submission (menghindari preflight) ----------
+        // We will submit a hidden form (POST) to the Apps Script URL; the server should read e.parameter.values (JSON string) or e.postData.contents.
+        function submitViaIframe(){
             const data = gatherData();
-            // basic validation: name and age and gender required
-            if(!data.name || !data.age || !data.gender){
-                showMessage('Mohon lengkapi Nama, Usia, dan Jenis Kelamin.', 'error');
-                // jump to first section
-                current = 0; showStep(current); return;
-            }
-
-            // prepare array order for Google Sheets
+            // Prepare array in same order as your Apps Script expects
             const values = [
-                data.timestamp,
-                data.name,
-                data.age,
-                data.gender,
-                data.phone,
-                data.address,
-                data.cough_long,
-                data.cough_blood,
-                data.fever_long,
-                data.night_sweats,
-                data.weight_loss,
-                data.complaint,
-                data.severity,
-                data.other_symptoms,
-                data.prior_tb,
-                data.contact_tb,
-                data.smoker,
-                data.bcg,
-                data.exam_date,
-                data.notes
+                data.timestamp, data.name, data.age, data.gender, data.phone, data.address,
+                data.cough_long, data.cough_blood, data.fever_long, data.night_sweats, data.weight_loss,
+                data.complaint, data.severity, data.other_symptoms, data.prior_tb, data.contact_tb,
+                data.smoker, data.bcg, data.exam_date, data.notes
             ];
+            const payload = { sheetName: sheetName, values: values };
 
-            try{
-                if(!googleAppsScriptUrl || googleAppsScriptUrl.includes('YOUR_SCRIPT_URL_HERE')){
-                    showMessage('Google Apps Script URL belum dikonfigurasi.', 'error');
-                    return;
-                }
-                // disable buttons while submitting
-                btnNext.disabled = true; btnBack.disabled = true; btnSaveDraft.disabled = true;
-                btnNext.textContent = 'Mengirim...';
-                const payload = { sheetName: sheetName, values: values };
-                const res = await fetch(googleAppsScriptUrl, {
-                    method:'POST',
-                    headers:{ 'Content-Type':'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await res.json();
-                if(result && result.success){
-                    showMessage('✓ Data berhasil tersimpan ke Google Sheets', 'success');
-                    // clear draft
-                    localStorage.removeItem('tb_form_draft');
-                    // reset form
-                    document.getElementById('tbForm').reset();
-                    // remove hidden inputs (chips)
-                    document.querySelectorAll('#tbForm input[type="hidden"]').forEach(i => i.remove());
-                    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                    setExamDate();
-                    current = 0;
-                    showStep(current);
-                } else {
-                    showMessage('Gagal mengirim: '+(result.error || 'response tidak valid'), 'error');
-                }
-            }catch(err){
-                showMessage('Error: '+ err.message, 'error');
-            }finally{
-                btnNext.disabled = false; btnBack.disabled = false; btnSaveDraft.disabled = false;
-                btnNext.textContent = current === sections.length-1 ? 'Kirim' : 'Selanjutnya →';
+            // Put JSON-stringified payload into hidden input 'values' (server doPost should parse e.parameter.values or e.postData.contents)
+            hiddenForm.querySelector('input[name="sheetName"]').value = sheetName;
+            hiddenValuesInput.value = JSON.stringify(payload);
+
+            // Listen for iframe load to assume success (can't read cross-origin content)
+            const iframe = document.getElementById('gs-iframe');
+            let loaded = false;
+            function onLoad() {
+                if (loaded) return;
+                loaded = true;
+                // optimistic success message
+                showMessage('✓ Data dikirim. Bila ada masalah, cek log Apps Script.', 'success');
+                // reset form & UI
+                document.getElementById('tbForm').reset();
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                localStorage.removeItem('tb_form_draft');
+                setExamDate();
+                current = 0;
+                showStep(current);
+                // cleanup listener
+                iframe.removeEventListener('load', onLoad);
             }
+            iframe.addEventListener('load', onLoad);
+            // submit
+            hiddenForm.submit();
+            // provide immediate feedback while waiting
+            showMessage('Mengirim data... (menggunakan form POST ke Apps Script)', 'success');
         }
 
-        // init
-        showStep(current);
-        setExamDate();
-
-        // small accessibility: allow Enter on inputs to go Next (except on textarea)
+        // accessibility: Enter to next (except textarea)
         document.getElementById('tbForm').addEventListener('keydown', (e)=>{
-            if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA'){
-                e.preventDefault();
-                btnNext.click();
-            }
+            if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA'){ e.preventDefault(); btnNext.click(); }
         });
-
     </script>
 </body>
 </html>
