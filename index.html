@@ -1,121 +1,1181 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Skrining TBC — eSCare</title>
     <style>
-        :root{--bg:#f4f7fb;--card:#fff;--accent:#2b7a78;--accent-2:#d9534f;--muted:#6b7280;--radius:12px;--shadow:0 6px 22px rgba(16,24,40,0.08)}
-        *{box-sizing:border-box}
-        body{margin:0;background:linear-gradient(180deg,#e8f7f6 0%,var(--bg) 100%);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#0f172a;display:flex;align-items:center;justify-content:center;padding:24px;min-height:100vh}
-        .wrap{width:100%;max-width:820px}
-        .card{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);position:relative}
-        header{display:flex;gap:16px;align-items:center;margin-bottom:18px;justify-content:space-between}
-        .logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),#4aa6a4);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 56px}
-        h1{font-size:18px;margin:0}
-        p.lead{margin:4px 0 0 0;font-size:13px;color:var(--muted)}
-        .top-actions{display:flex;gap:8px;align-items:center}
-        .top-actions button{padding:8px 12px;border-radius:10px;border:none;background:#f3f4f6;cursor:pointer;font-weight:700}
-        .top-actions button.active{background:var(--accent);color:white}
-        .step-labels{display:flex;gap:10px;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px}
-        .progress{display:flex;gap:10px;margin-bottom:16px}
-        .step{flex:1;height:10px;background:#eef2f5;border-radius:10px;overflow:hidden}
-        .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#4aa6a4);transition:width .35s}
-        form .section{display:none}
-        form .section.active{display:block}
-        .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-        .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-        label{font-weight:600;font-size:13px}
-        input, textarea, select{padding:10px;border-radius:8px;border:1px solid #e6e9ee;font-size:14px}
-        textarea{min-height:90px;resize:vertical}
-        .full{grid-column:1 / -1}
-        .choices{display:flex;gap:8px;flex-wrap:wrap}
-        .chip{padding:8px 12px;border-radius:999px;border:1px solid #e6e9ee;background:#fff;cursor:pointer}
-        .chip.active{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(43,122,120,0.14)}
-        .buttons{display:flex;gap:12px;justify-content:space-between;margin-top:16px;align-items:center}
-        .btn{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-        .btn.secondary{background:#f3f4f6;color:#111;border:1px solid #e6e9ee}
-        .btn.primary{background:var(--accent);color:#fff;box-shadow:0 8px 26px rgba(43,122,120,0.14)}
-        .btn.warn{background:var(--accent-2);color:#fff}
-        .note{font-size:13px;color:var(--muted)}
-        .message{display:none;padding:12px;border-radius:8px;margin-top:12px;font-weight:600}
-        .message.show{display:block}
-        .message.success{background:#ecf9f6;color:#0b5b53}
-        .message.error{background:#fff3f2;color:#7a271f}
-        footer{margin-top:10px;font-size:12px;color:var(--muted);text-align:center}
+      :root {
+        --bg: #f4f7fb;
+        --card: #fff;
+        --accent: #2b7a78;
+        --accent-2: #d9534f;
+        --muted: #6b7280;
+        --radius: 12px;
+        --shadow: 0 6px 22px rgba(16, 24, 40, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #e8f7f6 0%, var(--bg) 100%);
+        font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        min-height: 100vh;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 820px;
+      }
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 28px;
+        box-shadow: var(--shadow);
+        position: relative;
+      }
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin-bottom: 18px;
+        justify-content: space-between;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, var(--accent), #4aa6a4);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        flex: 0 0 56px;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0;
+      }
+      p.lead {
+        margin: 4px 0 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .top-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .top-actions button {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: none;
+        background: #f3f4f6;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .top-actions button.active {
+        background: var(--accent);
+        color: white;
+      }
+      .step-labels {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .progress {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .step {
+        flex: 1;
+        height: 10px;
+        background: #eef2f5;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), #4aa6a4);
+        transition: width 0.35s;
+      }
+      form .section {
+        display: none;
+      }
+      form .section.active {
+        display: block;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      label {
+        font-weight: 600;
+        font-size: 13px;
+      }
+      input,
+      textarea,
+      select {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #e6e9ee;
+        font-size: 14px;
+      }
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+      .full {
+        grid-column: 1 / -1;
+      }
+      .choices {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid #e6e9ee;
+        background: #fff;
+        cursor: pointer;
+      }
+      .chip.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 6px 16px rgba(43, 122, 120, 0.14);
+      }
+      .buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        margin-top: 16px;
+        align-items: center;
+      }
+      .btn {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn.secondary {
+        background: #f3f4f6;
+        color: #111;
+        border: 1px solid #e6e9ee;
+      }
+      .btn.primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 8px 26px rgba(43, 122, 120, 0.14);
+      }
+      .btn.warn {
+        background: var(--accent-2);
+        color: #fff;
+      }
+      .note {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .message {
+        display: none;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 12px;
+        font-weight: 600;
+      }
+      .message.show {
+        display: block;
+      }
+      .message.success {
+        background: #ecf9f6;
+        color: #0b5b53;
+      }
+      .message.error {
+        background: #fff3f2;
+        color: #7a271f;
+      }
+      footer {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+      }
 
-        /* Results panel */
-        #resultsPanel{display:none;padding:10px;border-radius:10px;border:1px solid #eef2f5;background:#fbfeff;margin-top:12px}
-        #resultsPanel h3{margin-top:0}
-        .kv{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed #eef2f5}
-        .kv:last-child{border-bottom:none}
-        .kv .k{width:40%;color:var(--muted);font-weight:600}
-        .kv .v{width:60%}
+      /* Results panel */
+      #resultsPanel {
+        display: none;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #eef2f5;
+        background: #fbfeff;
+        margin-top: 12px;
+      }
+      #resultsPanel h3 {
+        margin-top: 0;
+      }
+      .kv {
+        display: flex;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 1px dashed #eef2f5;
+      }
+      .kv:last-child {
+        border-bottom: none;
+      }
+      .kv .k {
+        width: 40%;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .kv .v {
+        width: 60%;
+      }
 
-        /* Modal */
-        .modal-backdrop{position:fixed;inset:0;background:rgba(10,12,14,0.45);display:none;align-items:center;justify-content:center;z-index:40}
-        .modal{background:white;border-radius:12px;padding:20px;max-width:520px;width:92%;box-shadow:0 12px 40px rgba(2,6,23,0.35)}
-        .modal h2{margin:0 0 8px 0}
-        .modal .modal-body{margin-top:12px}
-        .modal .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-        .modal .thanks{background:#ecf9f6;padding:10px;border-radius:8px;color:#0b5b53;margin-top:12px;font-weight:700}
+      /* Modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 12, 14, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 40;
+      }
+      .modal {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 520px;
+        width: 92%;
+        box-shadow: 0 12px 40px rgba(2, 6, 23, 0.35);
+      }
+      .modal h2 {
+        margin: 0 0 8px 0;
+      }
+      .modal .modal-body {
+        margin-top: 12px;
+      }
+      .modal .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 18px;
+      }
+      .modal .thanks {
+        background: #ecf9f6;
+        padding: 10px;
+        border-radius: 8px;
+        color: #0b5b53;
+        margin-top: 12px;
+        font-weight: 700;
+      }
 
-        @media (max-width:720px){.grid{grid-template-columns:1fr}.logo{width:48px;height:48px}}
+      @media (max-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .logo {
+          width: 48px;
+          height: 48px;
+        }
+      }
     </style>
-</head>
-<body>
+
+    <!-- EmailJS SDK (client-side) -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+  </head>
+  <body>
     <div class="wrap">
-        <div class="card" role="main" aria-labelledby="title">
-            <header>
-                <div style="display:flex;gap:16px;align-items:center">
-                    <div class="logo" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M9 3c0 3-2 6-5 6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M15 3c0 3 2 6 5 6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 8v11" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 id="title">Skrining TBC — eSCare</h1>
-                        <p class="lead">Form singkat — isi Data Diri, Gejala Utama, Keluhan, Informasi Lain.</p>
-                    </div>
-                </div>
-
-                <div class="top-actions" aria-hidden="true">
-                    <button id="viewFormBtn" class="active">Form</button>
-                    <button id="viewResultsBtn">Hasil</button>
-                </div>
-            </header>
-
-            <div class="step-labels" aria-hidden="true">
-                <span>Data Diri</span><span>Gejala Utama</span><span>Keluhan</span><span>Informasi Lain</span>
+      <div class="card" role="main" aria-labelledby="title">
+        <header>
+          <div style="display: flex; gap: 16px; align-items: center">
+            <div class="logo" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9 3c0 3-2 6-5 6"
+                  stroke="rgba(255,255,255,0.95)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M15 3c0 3 2 6 5 6"
+                  stroke="rgba(255,255,255,0.95)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 8v11"
+                  stroke="rgba(255,255,255,0.95)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
-            <div class="progress" aria-hidden="true">
-                <div class="step"><div class="bar" data-step="0" style="width:100%"></div></div>
-                <div class="step"><div class="bar" data-step="1"></div></div>
-                <div class="step"><div class="bar" data-step="2"></div></div>
-                <div class="step"><div class="bar" data-step="3"></div></div>
+            <div>
+              <h1 id="title">Skrining TBC — eSCare</h1>
+              <p class="lead">
+                Form singkat — isi Data Diri, Gejala Utama, Keluhan, Informasi
+                Lain.
+              </p>
             </div>
+          </div>
 
-            <!-- Main Form -->
-            <form id="tbForm" autocomplete="off">
-                <section class="section active" data-index="0" aria-label="Data Diri">
-                    <div class="grid">
-                        <div class="field full"><label for="name">Nama Lengkap <span style="color:#d9534f">*</span></label><input id="name" name="name" type="text" required placeholder="Nama pasien" /></div>
-                        <div class="field"><label for="age">Usia (tahun) <span style="color:#d9534f">*</span></label><input id="age" name="age" type="number" min="0" required placeholder="35" /></div>
-                        <div class="field"><label for="gender">Jenis Kelamin <span style="color:#d9534f">*</span></label><select id="gender" name="gender" required><option value="">Pilih</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option><option value="Lainnya">Lainnya</option></select></div>
-                        <div class="field"><label for="phone">Nomor Telepon</label><input id="phone" name="phone" type="tel" placeholder="+62..." /></div>
-                        <div class="field full"><label for="address">Alamat / Kota</label><input id="address" name="address" type="text" placeholder="Contoh: Jakarta Selatan" /></div>
-                    </div>
-                    <p class="note">Kolom bertanda * wajib diisi.</p>
-                </section>
+          <div class="top-actions" aria-hidden="true">
+            <button id="viewFormBtn" class="active">Form</button>
+            <button id="viewResultsBtn">Hasil</button>
+          </div>
+        </header>
 
-                <section class="section" data-index="1" aria-label="Gejala Utama">
-                    <div class="grid">
-                        <div class="field full"><label>Batuk > 2 minggu?</label><div class="choices"><button type="button" class="chip" data-name="cough_long" data-value="Ya">Ya</button><button type="button" class="chip" data-name="cough_long" data-value="Tidak">Tidak</button></div></div>
-                        <div class="field"><label>Batuk berdarah?</label><div class="choices"><button type="button" class="chip" data-name="cough_blood" data-value="Ya">Ya</button><button type="button" class="chip" data-name="cough_blood" data-value="Tidak">Tidak</button></div></div>
-                        <div class="field"><label>Demam >2 minggu?</label><div class="choices"><button type="button" class="chip" data-name="fever_long" data-value="Ya">Ya</button><button type="button" class="chip" data-name="fever_long" data-value="Tidak">Tidak</button></div></div>
-                        <div class="field"><label>Malam berkeringat?</label><div class="choices"><button type="button" class="chip" data-name="night_sweats" data-value="Ya">Ya</button><button type="button" class="chip" data-name="night_sweats" data-value="Tidak">Tidak</button></div></div>
-                        <div class="field full"><label>Penurunan berat badan?</label><div class="choices"><button type="button" class="chip" data-name="weight_loss" data-value="Ya">Ya</button><button type="button" class="chip" data-name="weight_loss" data-value="Tidak">Tidak</button></div></div>
-                    </div>
-                </section>
+        <div class="step-labels" aria-hidden="true">
+          <span>Data Diri</span><span>Gejala Utama</span><span>Keluhan</span
+          ><span>Informasi Lain</span>
+        </div>
+        <div class="progress" aria-hidden="true">
+          <div class="step">
+            <div class="bar" data-step="0" style="width: 100%"></div>
+          </div>
+          <div class="step"><div class="bar" data-step="1"></div></div>
+          <div class="step"><div class="bar" data-step="2"></div></div>
+          <div class="step"><div class="bar" data-step="3"></div></div>
+        </div>
+
+        <!-- Main Form -->
+        <form id="tbForm" autocomplete="off">
+          <section class="section active" data-index="0" aria-label="Data Diri">
+            <div class="grid">
+              <div class="field full">
+                <label for="name"
+                  >Nama Lengkap <span style="color: #d9534f">*</span></label
+                ><input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Nama pasien"
+                />
+              </div>
+              <div class="field">
+                <label for="age"
+                  >Usia (tahun) <span style="color: #d9534f">*</span></label
+                ><input
+                  id="age"
+                  name="age"
+                  type="number"
+                  min="0"
+                  required
+                  placeholder="35"
+                />
+              </div>
+              <div class="field">
+                <label for="gender"
+                  >Jenis Kelamin <span style="color: #d9534f">*</span></label
+                ><select id="gender" name="gender" required>
+                  <option value="">Pilih</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="phone">Nomor Telepon</label
+                ><input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="+62..."
+                />
+              </div>
+              <div class="field full">
+                <label for="address">Alamat / Kota</label
+                ><input
+                  id="address"
+                  name="address"
+                  type="text"
+                  placeholder="Contoh: Jakarta Selatan"
+                />
+              </div>
+            </div>
+            <p class="note">Kolom bertanda * wajib diisi.</p>
+          </section>
+
+          <section class="section" data-index="1" aria-label="Gejala Utama">
+            <div class="grid">
+              <div class="field full">
+                <label>Batuk > 2 minggu?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="cough_long"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="cough_long"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Batuk berdarah?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="cough_blood"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="cough_blood"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Demam >2 minggu?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="fever_long"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="fever_long"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Malam berkeringat?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="night_sweats"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="night_sweats"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Penurunan berat badan?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="weight_loss"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="weight_loss"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" data-index="2" aria-label="Keluhan">
+            <div class="grid">
+              <div class="field full">
+                <label for="complaint">Deskripsikan keluhan pasien</label
+                ><textarea
+                  id="complaint"
+                  name="complaint"
+                  placeholder="Tuliskan keluhan, durasi..."
+                ></textarea>
+              </div>
+              <div class="field">
+                <label for="severity">Tingkat keparahan</label
+                ><select id="severity" name="severity">
+                  <option value="">Pilih</option>
+                  <option value="Ringan">Ringan</option>
+                  <option value="Sedang">Sedang</option>
+                  <option value="Berat">Berat</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="other_symptoms">Gejala lain</label
+                ><input
+                  id="other_symptoms"
+                  name="other_symptoms"
+                  type="text"
+                  placeholder="mis. sesak napas"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="section" data-index="3" aria-label="Informasi Lain">
+            <div class="grid">
+              <div class="field">
+                <label>Riwayat TB sebelumnya?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="prior_tb"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="prior_tb"
+                    data-value="Tidak"
+                  >
+                    Tidak</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="prior_tb"
+                    data-value="Tidak Tahu"
+                  >
+                    Tidak Tahu
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Kontak dengan penderita TB?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="contact_tb"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="contact_tb"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Perokok saat ini?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="smoker"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="smoker"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Sudah mendapat BCG?</label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="bcg"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="bcg"
+                    data-value="Tidak"
+                  >
+                    Tidak</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="bcg"
+                    data-value="Tidak Tahu"
+                  >
+                    Tidak Tahu
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label for="exam_date">Tanggal Pemeriksaan</label
+                ><input id="exam_date" name="exam_date" type="text" readonly />
+              </div>
+              <div class="field full">
+                <label for="notes">Catatan Tambahan</label
+                ><textarea
+                  id="notes"
+                  name="notes"
+                  placeholder="Catatan petugas..."
+                ></textarea>
+              </div>
+            </div>
+          </section>
+
+          <div class="buttons" role="group" aria-label="Navigasi">
+            <button
+              type="button"
+              class="btn secondary"
+              id="btnBack"
+              style="visibility: hidden"
+            >
+              ← Kembali
+            </button>
+            <div style="flex: 1"></div>
+            <button type="button" class="btn warn" id="btnSaveDraft">
+              Simpan Draft
+            </button>
+            <button type="button" class="btn primary" id="btnNext">
+              Selanjutnya →
+            </button>
+          </div>
+
+          <div id="message" class="message"></div>
+        </form>
+
+        <!-- Results Panel (accessible via header 'Hasil' button) -->
+        <div id="resultsPanel" aria-live="polite">
+          <h3>Ringkasan Pengisian Terakhir</h3>
+          <div id="resultsContent">
+            <p class="note">
+              Belum ada data. Setelah submit, ringkasan akan muncul di sini.
+            </p>
+          </div>
+          <div
+            style="display: flex; justify-content: flex-end; margin-top: 12px"
+          >
+            <button id="backToFormFromResults" class="btn primary">
+              Kembali ke Form
+            </button>
+          </div>
+        </div>
+
+        <footer>
+          Form ini untuk skrining TBC. Data akan disimpan ke Google Sheets.
+        </footer>
+      </div>
+    </div>
+
+    <!-- Hidden iframe dan form (dipakai untuk mengirim ke Google Apps Script tanpa preflight) -->
+    <iframe name="gs-iframe" id="gs-iframe" style="display: none"></iframe>
+    <form
+      id="gs-hidden-form"
+      action=""
+      method="post"
+      target="gs-iframe"
+      style="display: none"
+    >
+      <input type="hidden" name="sheetName" value="TB_Screening" />
+      <input type="hidden" name="values" value="" />
+    </form>
+
+    <!-- Modal summary -->
+    <div
+      class="modal-backdrop"
+      id="modalBackdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal" id="modal">
+        <h2>Terima kasih — Ringkasan Pengisian</h2>
+        <div class="modal-body" id="modalBody">
+          <!-- summary filled dynamically -->
+        </div>
+        <div class="thanks" id="modalThanks">
+          Terima kasih sudah berpartisipasi mengisi form skrining TBC.
+        </div>
+        <div class="modal-actions">
+          <button id="modalClose" class="btn secondary">Tutup</button>
+          <button id="modalViewResults" class="btn primary">
+            Lihat Ringkasan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // CONFIG: ganti jika perlu
+      const googleAppsScriptUrl =
+        "https://script.google.com/macros/s/AKfycbza2k2uKbXVLFewIxcfrF3y9KIavroxqpuwaxPM68LG3-3cd8sAQfGyPHlHu9qIVvRktQ/exec";
+      const sheetName = "TB_Screening";
+
+      // EMAILJS CONFIG - ganti dengan nilai Anda
+      emailjs.init("wcIKSqvFvWJneAHIm");
+      const EMAIL_RECIPIENT = "imfeshika@gmail.com"; // tujuan email (yang Anda minta)
+
+      // UI elements
+      const sections = Array.from(document.querySelectorAll(".section"));
+      const bars = Array.from(document.querySelectorAll(".bar"));
+      const btnNext = document.getElementById("btnNext");
+      const btnBack = document.getElementById("btnBack");
+      const btnSaveDraft = document.getElementById("btnSaveDraft");
+      const msgBox = document.getElementById("message");
+      const examDate = document.getElementById("exam_date");
+      const hiddenForm = document.getElementById("gs-hidden-form");
+      const hiddenValuesInput = hiddenForm.querySelector(
+        'input[name="values"]'
+      );
+      hiddenForm.action = googleAppsScriptUrl;
+
+      const viewFormBtn = document.getElementById("viewFormBtn");
+      const viewResultsBtn = document.getElementById("viewResultsBtn");
+      const resultsPanel = document.getElementById("resultsPanel");
+      const resultsContent = document.getElementById("resultsContent");
+      const backToFormFromResults = document.getElementById(
+        "backToFormFromResults"
+      );
+
+      // modal
+      const modalBackdrop = document.getElementById("modalBackdrop");
+      const modalBody = document.getElementById("modalBody");
+      const modalClose = document.getElementById("modalClose");
+      const modalViewResults = document.getElementById("modalViewResults");
+
+      let current = 0;
+
+      function setExamDate() {
+        const d = new Date();
+        examDate.value = d.toISOString().split("T")[0];
+      }
+
+      function showMessage(text, type = "success") {
+        msgBox.textContent = text;
+        msgBox.className = `message show ${
+          type === "success" ? "success" : "error"
+        }`;
+        setTimeout(() => msgBox.classList.remove("show"), 3500);
+      }
+
+      function showStep(i) {
+        sections.forEach((s) => s.classList.remove("active"));
+        sections[i].classList.add("active");
+        bars.forEach((b, idx) => (b.style.width = idx <= i ? "100%" : "0%"));
+        btnBack.style.visibility = i === 0 ? "hidden" : "visible";
+        btnNext.textContent =
+          i === sections.length - 1 ? "Kirim" : "Selanjutnya →";
+        // ensure results panel hidden when navigating form
+        hideResultsPanel();
+        setActiveTopAction("form");
+      }
+
+      // chips behavior
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const name = chip.dataset.name;
+          document
+            .querySelectorAll(`.chip[data-name="${name}"]`)
+            .forEach((c) => c.classList.remove("active"));
+          chip.classList.add("active");
+        });
+      });
+
+      btnNext.addEventListener("click", () => {
+        if (current < sections.length - 1) {
+          if (!validateSection(current)) return;
+          current++;
+          showStep(current);
+        } else {
+          if (!validateSection(current)) return;
+          submitViaIframe();
+        }
+      });
+
+      btnBack.addEventListener("click", () => {
+        if (current > 0) {
+          current--;
+          showStep(current);
+        }
+      });
+
+      btnSaveDraft.addEventListener("click", () => {
+        const data = gatherData();
+        localStorage.setItem("tb_form_draft", JSON.stringify(data));
+        showMessage("Draft disimpan secara lokal", "success");
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        setExamDate();
+        setReportDateInputs();
+        const draft = localStorage.getItem("tb_form_draft");
+        if (draft) {
+          try {
+            restoreDraft(JSON.parse(draft));
+          } catch (e) {}
+        }
+        showStep(current);
+        // top actions
+        viewFormBtn.addEventListener("click", () => {
+          hideResultsPanel();
+          setActiveTopAction("form");
+        });
+        viewResultsBtn.addEventListener("click", () => {
+          showResultsPanel();
+          setActiveTopAction("results");
+        });
+        backToFormFromResults.addEventListener("click", () => {
+          hideResultsPanel();
+          setActiveTopAction("form");
+        });
+        // modal actions
+        modalClose.addEventListener("click", () => hideModal());
+        modalViewResults.addEventListener("click", () => {
+          hideModal();
+          showResultsPanel();
+          setActiveTopAction("results");
+        });
+      });
+
+      function setReportDateInputs() {
+        const iso = new Date().toISOString().split("T")[0];
+        document.querySelectorAll("input[readonly]").forEach((i) => {
+          if (i.name === "exam_date") i.value = iso;
+        });
+      }
+
+      function validateSection(idx) {
+        const sec = sections[idx];
+        const reqs = sec.querySelectorAll(
+          "input[required], select[required], textarea[required]"
+        );
+        for (const el of reqs) {
+          if (!el.value || el.value.trim() === "") {
+            el.focus();
+            showMessage("Mohon lengkapi kolom yang wajib diisi.", "error");
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function gatherData() {
+        const fd = new FormData(document.getElementById("tbForm"));
+        const chipGroups = {};
+        document.querySelectorAll(".chip.active").forEach((c) => {
+          chipGroups[c.dataset.name] = c.dataset.value;
+        });
+        const data = {
+          timestamp: new Date().toLocaleString(),
+          name: (fd.get("name") || "").trim(),
+          age: fd.get("age") || "",
+          gender: fd.get("gender") || "",
+          phone: fd.get("phone") || "",
+          address: fd.get("address") || "",
+          cough_long: chipGroups["cough_long"] || "",
+          cough_blood: chipGroups["cough_blood"] || "",
+          fever_long: chipGroups["fever_long"] || "",
+          night_sweats: chipGroups["night_sweats"] || "",
+          weight_loss: chipGroups["weight_loss"] || "",
+          complaint: fd.get("complaint") || "",
+          severity: fd.get("severity") || "",
+          other_symptoms: fd.get("other_symptoms") || "",
+          prior_tb: chipGroups["prior_tb"] || "",
+          contact_tb: chipGroups["contact_tb"] || "",
+          smoker: chipGroups["smoker"] || "",
+          bcg: chipGroups["bcg"] || "",
+          exam_date: fd.get("exam_date") || "",
+          notes: fd.get("notes") || "",
+        };
+        return data;
+      }
+
+      function restoreDraft(obj) {
+        try {
+          if (obj.name) document.getElementById("name").value = obj.name;
+          if (obj.age) document.getElementById("age").value = obj.age;
+          if (obj.gender) document.getElementById("gender").value = obj.gender;
+          if (obj.phone) document.getElementById("phone").value = obj.phone;
+          if (obj.address)
+            document.getElementById("address").value = obj.address;
+          if (obj.complaint)
+            document.getElementById("complaint").value = obj.complaint;
+          if (obj.severity)
+            document.getElementById("severity").value = obj.severity;
+          if (obj.other_symptoms)
+            document.getElementById("other_symptoms").value =
+              obj.other_symptoms;
+          if (obj.notes) document.getElementById("notes").value = obj.notes;
+          [
+            "cough_long",
+            "cough_blood",
+            "fever_long",
+            "night_sweats",
+            "weight_loss",
+            "prior_tb",
+            "contact_tb",
+            "smoker",
+            "bcg",
+          ].forEach((name) => {
+            if (obj[name]) {
+              const el = document.querySelector(
+                `.chip[data-name="${name}"][data-value="${obj[name]}"]`
+              );
+              if (el) el.classList.add("active");
+            }
+          });
+        } catch (e) {}
+      }
+
+      function renderSummaryHTML(data) {
+        const rows = [
+          ["Waktu", data.timestamp || ""],
+          ["Nama", data.name || ""],
+          ["Usia", data.age || ""],
+          ["Jenis Kelamin", data.gender || ""],
+          ["Telepon", data.phone || ""],
+          ["Alamat", data.address || ""],
+          ["Batuk >2 minggu", data.cough_long || ""],
+          ["Batuk berdarah", data.cough_blood || ""],
+          ["Demam >2 minggu", data.fever_long || ""],
+          ["Malam berkeringat", data.night_sweats || ""],
+          ["Penurunan berat badan", data.weight_loss || ""],
+          ["Keluhan", data.complaint || ""],
+          ["Keparahan", data.severity || ""],
+          ["Gejala lain", data.other_symptoms || ""],
+          ["Riwayat TB", data.prior_tb || ""],
+          ["Kontak TB", data.contact_tb || ""],
+          ["Perokok", data.smoker || ""],
+          ["BCG", data.bcg || ""],
+          ["Tanggal Pemeriksaan", data.exam_date || ""],
+          ["Catatan", data.notes || ""],
+        ];
+        const modalHtml = rows
+          .map(
+            (r) =>
+              `<div style="display:flex;gap:8px;margin:6px 0"><strong style="width:42%;color:var(--muted)">${
+                r[0]
+              }</strong><span>${escapeHtml(r[1])}</span></div>`
+          )
+          .join("");
+        const resultsHtml = rows
+          .map(
+            (r) =>
+              `<div class="kv"><div class="k">${
+                r[0]
+              }</div><div class="v">${escapeHtml(r[1])}</div></div>`
+          )
+          .join("");
+        return { modalHtml, resultsHtml };
+      }
+
+      function escapeHtml(str) {
+        if (!str && str !== 0) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // --------- IFRAME submission (menghindari preflight) ----------
+      function submitViaIframe() {
+        const data = gatherData();
+        const values = [
+          data.timestamp,
+          data.name,
+          data.age,
+          data.gender,
+          data.phone,
+          data.address,
+          data.cough_long,
+          data.cough_blood,
+          data.fever_long,
+          data.night_sweats,
+          data.weight_loss,
+          data.complaint,
+          data.severity,
+          data.other_symptoms,
+          data.prior_tb,
+          data.contact_tb,
+          data.smoker,
+          data.bcg,
+          data.exam_date,
+          data.notes,
+        ];
+        const payload = { sheetName: sheetName, values: values };
+
+        hiddenForm.querySelector('input[name="sheetName"]').value = sheetName;
+        hiddenValuesInput.value = JSON.stringify(payload);
+
+        const iframe = document.getElementById("gs-iframe");
+        let loaded = false;
+        function onLoad() {
+          if (loaded) return;
+          loaded = true;
+          // Save last submission locally for results view and modal
+          try {
+            localStorage.setItem("tb_last_submission", JSON.stringify(data));
+          } catch (e) {}
+          // Send email via EmailJS (if configured)
+          try {
+            sendEmail(data);
+          } catch (e) {
+            console.warn("sendEmail failed", e);
+          }
+          // Show summary modal
+          showSummaryModal(data);
+          // reset form & UI
+          document.getElementById("tbForm").reset();
+          document
+            .querySelectorAll(".chip")
+            .forEach((c) => c.classList.remove("active"));
+          localStorage.removeItem("tb_form_draft");
+          setExamDate();
+          current = 0;
+          showStep(current);
+          iframe.removeEventListener("load", onLoad);
+        }
+        iframe.addEventListener("load", onLoad);
+        hiddenForm.submit();
+        showMessage(
+          "Mengirim data... (menggunakan form POST ke Apps Script)",
+          "success"
+        );
+      }
+
+      // EmailJS send
+      function sendEmail(data) {
+        if (typeof emailjs === "undefined") {
+          console.warn("EmailJS SDK not loaded");
+          return;
+        }
+
+        // Template parameters - adjust according to your EmailJS template variables
+        const summaryShort = `Nama: ${data.name} | Usia: ${
+          data.age
+        } | Keluhan: ${data.complaint || "-"}`;
+
+        const serviceID = "default_service";
+        const templateID = "template_tbc_email";
+
+        emailjs.sendForm(serviceID, templateID, EMAIL_RECIPIENT).then(
+          () => {
+            console.log("EmailJS sent", response.status, response.text);
+          },
+          (err) => {
+            console.error("EmailJS error", JSON.stringify(err));
+          }
+        );
+      }
+
+      // Modal handling
+      function showSummaryModal(data) {
+        const html = renderSummaryHTML(data);
+        modalBody.innerHTML = html.modalHtml;
+        modalBackdrop.style.display = "flex";
+        modalBackdrop.setAttribute("aria-hidden", "false");
+      }
+      function hideModal() {
+        modalBackdrop.style.display = "none";
+        modalBackdrop.setAttribute("aria-hidden", "true");
+      }
+
+      // Results panel handling
+      function showResultsPanel() {
+        const raw = localStorage.getItem("tb_last_submission");
+        if (!raw) {
+          resultsContent.innerHTML =
+            '<p class="note">Belum ada data pengisian. Isi form dan submit terlebih dahulu.</p>';
+        } else {
+          try {
+            const obj = JSON.parse(raw);
+            const html = renderSummaryHTML(obj);
+            resultsContent.innerHTML = html.resultsHtml;
+          } catch (e) {
+            resultsContent.innerHTML =
+              '<p class="note">Gagal memuat data ringkasan.</p>';
+          }
+        }
+        resultsPanel.style.display = "block";
+        document.getElementById("tbForm").style.display = "none";
+        setActiveTopAction("results");
+      }
+      function hideResultsPanel() {
+        resultsPanel.style.display = "none";
+        document.getElementById("tbForm").style.display = "";
+        setActiveTopAction("form");
+      }
+      function setActiveTopAction(mode) {
+        if (mode === "results") {
+          viewResultsBtn.classList.add("active");
+          viewFormBtn.classList.remove("active");
+        } else {
+          viewFormBtn.classList.add("active");
+          viewResultsBtn.classList.remove("active");
+        }
+      }
+
+      // accessibility: Enter to next (except textarea)
+      document.getElementById("tbForm").addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault();
+          btnNext.click();
+        }
+      });
+    </script>
+  </body>
+</html>
