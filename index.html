@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSCare - Patient Data Entry to Google Sheets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .setup-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .setup-section h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .setup-section small {
+            color: #666;
+            font-size: 12px;
+            display: block;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-button:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .required::after {
+            content: ' *';
+            color: #ff4757;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 eSCare</h1>
+            <p>Patient Data Entry to Google Sheets</p>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            ✓ Data submitted to Google Sheets successfully!
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="patient" onclick="switchTab('patient')">👤 Add Patient</button>
+            <button class="tab-button" data-tab="report" onclick="switchTab('report')">📝 Add Report</button>
+        </div>
+
+        <!-- Patient Form -->
+        <form id="patientForm" class="tab-content active">
+            <div class="form-group">
+                <label class="required">Full Name</label>
+                <input type="text" name="name" required placeholder="Enter patient name">
+            </div>
+
+            <div class="form-group">
+                <label class="required">Email</label>
+                <input type="email" name="email" required placeholder="Enter email address">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" placeholder="+62812345678">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Status</label>
+                    <select name="status" required>
+                        <option value="">Select status</option>
+                        <option value="suspect">Suspect</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="recovered">Recovered</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="location" placeholder="e.g., Jakarta">
+            </div>
+
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea name="notes" placeholder="Additional information..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">➕ Add Patient</button>
+        </form>
+
+        <!-- Report Form -->
+        <form id="reportForm" class="tab-content">
+            <div class="form-group">
+                <label class="required">Patient Name</label>
+                <input type="text" name="patientName" required placeholder="Enter patient name">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="required">Report Type</label>
+                    <select name="reportType" required>
+                        <option value="">Select type</option>
+                        <option value="daily">Daily Report</option>
+                        <option value="weekly">Weekly Summary</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" name="reportDate" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Symptoms</label>
+                <textarea name="symptoms" required placeholder="Describe symptoms..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Visits/Consultations</label>
+                <textarea name="visits" required placeholder="Describe visits..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea name="notes" placeholder="Additional notes..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">➕ Add Report</button>
+        </form>
+    </div>
+
+    <script>
+        let spreadsheetId = '1cBG2HpJuIyBRzMwnZRorprkQE3gpVOjYcFolMAUaD-c';
+        // Paste your Google Apps Script deployment URL here
+        let googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbza2k2uKbXVLFewIxcfrF3y9KIavroxqpuwaxPM68LG3-3cd8sAQfGyPHlHu9qIVvRktQ/exec';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setReportDate();
+            setupForms();
+        });
+
+        // Get today's date
+        function getTodayDate() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        }
+
+        // Set report date
+        function setReportDate() {
+            document.querySelector('input[name="reportDate"]').value = getTodayDate();
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(f => f.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+
+            if (tab === 'patient') {
+                document.getElementById('patientForm').classList.add('active');
+                document.querySelector('[data-tab="patient"]').classList.add('active');
+            } else {
+                document.getElementById('reportForm').classList.add('active');
+                document.querySelector('[data-tab="report"]').classList.add('active');
+            }
+        }
+
+        // Setup forms
+        function setupForms() {
+            document.getElementById('patientForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!spreadsheetId) {
+                    showMessage('❌ Please configure Google Sheets first', 'error');
+                    return;
+                }
+
+                const formData = new FormData(e.target);
+                const timestamp = new Date().toLocaleString();
+                const values = [
+                    timestamp,
+                    formData.get('name'),
+                    formData.get('email'),
+                    formData.get('phone'),
+                    formData.get('status'),
+                    formData.get('location'),
+                    formData.get('notes')
+                ];
+
+                await submitToGoogleSheets('Patients', values);
+                e.target.reset();
+            });
+
+            document.getElementById('reportForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!spreadsheetId) {
+                    showMessage('❌ Please configure Google Sheets first', 'error');
+                    return;
+                }
+
+                const formData = new FormData(e.target);
+                const timestamp = new Date().toLocaleString();
+                const values = [
+                    timestamp,
+                    formData.get('patientName'),
+                    formData.get('reportType'),
+                    formData.get('reportDate'),
+                    formData.get('symptoms'),
+                    formData.get('visits'),
+                    formData.get('notes')
+                ];
+
+                await submitToGoogleSheets('Reports', values);
+                e.target.reset();
+                setReportDate();
+            });
+        }
+
+        // Submit to Google Sheets using Google Apps Script
+        async function submitToGoogleSheets(sheetName, values) {
+            try {
+                if (!googleAppsScriptUrl) {
+                    showMessage('❌ Google Apps Script URL not configured', 'error');
+                    return;
+                }
+
+                const payload = {
+                    sheetName: sheetName,
+                    values: values
+                };
+
+                const response = await fetch(googleAppsScriptUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showMessage(`✓ Data submitted to ${sheetName}!`, 'success');
+                } else {
+                    showMessage(`❌ Error: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Show message
+        function showMessage(text) {
+            const msg = document.getElementById('successMessage');
+            msg.textContent = text;
+            msg.className = `success-message show`;
+            setTimeout(() => {
+                msg.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
