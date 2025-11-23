@@ -1539,15 +1539,38 @@
           // Save last submission locally for results view and modal
           try {
             localStorage.setItem("tb_last_submission", JSON.stringify(data));
-          } catch (e) {}
-          // Send email via EmailJS (if configured)
-          try {
-            sendEmail(data);
-          } catch (e) {
-            console.warn("sendEmail failed", e);
-          }
+          } catch (e) {}          
           // Show summary modal
           showSummaryModal(data);
+          // Kirim email hanya jika terduga TBC (ada minimal 1 'Ya' di gejala)
+          (function () {
+          const symptomKeys = [
+            "cough_long",
+            "cough_short",
+            "cough_blood",
+            "fever",
+            "night_sweats",
+            "shortness_of_breath",
+            "chest_pain",
+            "lymph_swelling",
+            "appetite_loss",
+            "fatigue",
+            "weight_loss",
+          ];
+          const yesCount = symptomKeys.reduce(
+            (acc, k) => acc + (data[k] === "Ya" ? 1 : 0),
+            0
+          );
+          if (yesCount >= 1) {
+            try {
+            sendEmail(data);
+            } catch (e) {
+            console.warn("sendEmail failed", e);
+            }
+          } else {
+            console.log("Bukan terduga TBC — email tidak dikirim");
+          }
+          })();
           // reset form & UI
           document.getElementById("tbForm").reset();
           document
