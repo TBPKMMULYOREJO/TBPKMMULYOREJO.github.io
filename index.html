@@ -342,11 +342,8 @@
               </svg>
             </div>
             <div>
-              <h1 id="title">Skrining TBC — eSCare</h1>
-              <p class="lead">
-                Form singkat — isi Data Diri, Gejala Utama, Keluhan, Informasi
-                Lain.
-              </p>
+              <h1 id="title">SIKAT TB</h1>
+              <p class="lead">Skrining Cepat Atasi TBC</p>
             </div>
           </div>
 
@@ -357,8 +354,7 @@
         </header>
 
         <div class="step-labels" aria-hidden="true">
-          <span>Data Diri</span><span>Gejala Utama</span><span>Keluhan</span
-          ><span>Informasi Lain</span>
+          <span>Data Diri</span><span>Keluhan yang Dirasakan</span><span>Informasi Lain</span>
         </div>
         <div class="progress" aria-hidden="true">
           <div class="step">
@@ -366,11 +362,11 @@
           </div>
           <div class="step"><div class="bar" data-step="1"></div></div>
           <div class="step"><div class="bar" data-step="2"></div></div>
-          <div class="step"><div class="bar" data-step="3"></div></div>
         </div>
 
         <!-- Main Form -->
         <form id="tbForm" autocomplete="off">
+          <input type="hidden" id="exam_date" name="exam_date" readonly />
           <section class="section active" data-index="0" aria-label="Data Diri">
             <div class="grid">
               <div class="field full">
@@ -397,13 +393,28 @@
                 />
               </div>
               <div class="field">
+                <label for="weight">Berat Badan (kg) <span style="color: #d9534f">*</span></label
+                ><input
+                  id="weight"
+                  name="weight"
+                  type="number"
+                /> 
+              </div>
+              <div class="field">
+                <label for="height">Tinggi Badan (cm) <span style="color: #d9534f">*</span></label
+                ><input
+                  id="height"
+                  name="height"
+                  type="number"
+                /> 
+              </div>
+              <div class="field">
                 <label for="gender"
                   >Jenis Kelamin <span style="color: #d9534f">*</span></label
                 ><select id="gender" name="gender" required>
                   <option value="">Pilih</option>
                   <option value="Laki-laki">Laki-laki</option>
                   <option value="Perempuan">Perempuan</option>
-                  <option value="Lainnya">Lainnya</option>
                 </select>
               </div>
               <div class="field">
@@ -415,23 +426,71 @@
                   placeholder="+62..."
                 />
               </div>
+              <div class="field">
+                <label for="job">Pekerjaan <span style="color: #d9534f">*</span></label
+                ><input
+                  id="job"
+                  name="job"
+                  type="text"
+                />
+              </div>
               <div class="field full">
-                <label for="address">Alamat / Kota</label
+                <label for="address">Alamat Domisili <span style="color: #d9534f">*</span></label
                 ><input
                   id="address"
                   name="address"
                   type="text"
-                  placeholder="Contoh: Jakarta Selatan"
                 />
+              </div>
+              <div class="field">
+                <label for="location"
+                  >Posyandu Keluarga (Posga) <span style="color: #d9534f">*</span></label
+                ><select id="location" name="location" required>
+                  <option value="">Pilih</option>
+                  <option value="Melati 2">Melati 2</option>
+                  <option value="Anggrek 1">Anggrek 1</option>
+                  <option value="Melati 3">Melati 3</option>
+                  <option value="Anggrek 2">Anggrek 2</option>
+                  <option value="Mawar 1">Mawar 1</option>
+                  <option value="Melati 1">Melati 1</option>
+                  <option value="Mawar 2">Mawar 2</option>
+                  <option value="Anggrek 3">Anggrek 3</option>
+                  <option value="Mekarsari">Mekarsari</option>
+                  <option value="Dahlia III">Dahlia III</option>
+                  <option value="Melati v">Melati v</option>
+                  <option value="Dahlia I">Dahlia I</option>
+                  <option value="Melati III">Melati III</option>
+                  <option value="Flamboyan I">Flamboyan I</option>
+                  <option value="Flamboyan II">Flamboyan II</option>
+                  <option value="Asparagus II">Asparagus II</option>
+                  <option value="Dahlia II">Dahlia II</option>
+                  <option value="Melati I">Melati I</option>
+                  <option value="Melati II">Melati II</option>
+                  <option value="Dahlia V">Dahlia V</option>
+                  <option value="Dahlia IV">Dahlia IV</option>
+                  <option value="Dahlia VI">Dahlia VI</option>
+                  <option value="Asparagus I">Asparagus I</option>
+                  <option value="Mawar III">Mawar III</option>
+                  <option value="Mawar I">Mawar I</option>
+                  <option value="Mawar II">Mawar II</option>
+                  <option value="Mawar IV">Mawar IV</option>
+                  <option value="Melati IV">Melati IV</option>
+                  <option value="Berlian P">Berlian P</option>
+                  <option value="Intan P">Intan P</option>
+                  <option value="Melati P">Melati P</option>
+                  <option value="Mawar P">Mawar P</option>
+                  <option value="Delima">Delima</option>
+                  <option value="Permata P">Permata P</option>
+                </select>
               </div>
             </div>
             <p class="note">Kolom bertanda * wajib diisi.</p>
           </section>
 
-          <section class="section" data-index="1" aria-label="Gejala Utama">
-            <div class="grid">
-              <div class="field full">
-                <label>Batuk > 2 minggu?</label>
+          <section class="section" data-index="1" aria-label="Keluhan yang dirasakan">
+            <div class="questions-grid">
+              <div class="field">
+                <label>Batuk > 2 minggu <span style="color: #d9534f">*</span></label>
                 <div class="choices">
                   <button
                     type="button"
@@ -451,7 +510,107 @@
                 </div>
               </div>
               <div class="field">
-                <label>Batuk berdarah?</label>
+                <label>Demam <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="fever"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="fever"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Berkeringat di malam hari tanpa aktivitas <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="night_sweats"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="night_sweats"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Sesak nafas <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="shortness_of_breath"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="shortness_of_breath"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Nyeri dada <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="chest_pain"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="chest_pain"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Ada benjolan di leher/bawah rahang/bawah telinga/ketiak <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="lymph_swelling"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="lymph_swelling"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Batuk berdarah <span style="color: #d9534f">*</span></label>
                 <div class="choices">
                   <button
                     type="button"
@@ -471,19 +630,19 @@
                 </div>
               </div>
               <div class="field">
-                <label>Demam >2 minggu?</label>
+                <label>Batuk kurang dari 2 minggu <span style="color: #d9534f">*</span></label>
                 <div class="choices">
                   <button
                     type="button"
                     class="chip"
-                    data-name="fever_long"
+                    data-name="cough_short"
                     data-value="Ya"
                   >
                     Ya</button
                   ><button
                     type="button"
                     class="chip"
-                    data-name="fever_long"
+                    data-name="cough_short"
                     data-value="Tidak"
                   >
                     Tidak
@@ -491,27 +650,47 @@
                 </div>
               </div>
               <div class="field">
-                <label>Malam berkeringat?</label>
+                <label>Nafsu makan turun (hilang nafsu makan selama berhari-hari) <span style="color: #d9534f">*</span></label>
                 <div class="choices">
                   <button
                     type="button"
                     class="chip"
-                    data-name="night_sweats"
+                    data-name="appetite_loss"
                     data-value="Ya"
                   >
                     Ya</button
                   ><button
                     type="button"
                     class="chip"
-                    data-name="night_sweats"
+                    data-name="appetite_loss"
                     data-value="Tidak"
                   >
                     Tidak
                   </button>
                 </div>
               </div>
-              <div class="field full">
-                <label>Penurunan berat badan?</label>
+              <div class="field">
+                <label>Mudah lelah (sering kecapekan tanpa aktivitas fisik yang berarti) <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="fatigue"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="fatigue"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Berat badan turun (turun drastis berhari-hari bukan karena diet) <span style="color: #d9534f">*</span></label>
                 <div class="choices">
                   <button
                     type="button"
@@ -560,117 +739,6 @@
                   type="text"
                   placeholder="mis. sesak napas"
                 />
-              </div>
-            </div>
-          </section>
-
-          <section class="section" data-index="3" aria-label="Informasi Lain">
-            <div class="grid">
-              <div class="field">
-                <label>Riwayat TB sebelumnya?</label>
-                <div class="choices">
-                  <button
-                    type="button"
-                    class="chip"
-                    data-name="prior_tb"
-                    data-value="Ya"
-                  >
-                    Ya</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="prior_tb"
-                    data-value="Tidak"
-                  >
-                    Tidak</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="prior_tb"
-                    data-value="Tidak Tahu"
-                  >
-                    Tidak Tahu
-                  </button>
-                </div>
-              </div>
-              <div class="field">
-                <label>Kontak dengan penderita TB?</label>
-                <div class="choices">
-                  <button
-                    type="button"
-                    class="chip"
-                    data-name="contact_tb"
-                    data-value="Ya"
-                  >
-                    Ya</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="contact_tb"
-                    data-value="Tidak"
-                  >
-                    Tidak
-                  </button>
-                </div>
-              </div>
-              <div class="field">
-                <label>Perokok saat ini?</label>
-                <div class="choices">
-                  <button
-                    type="button"
-                    class="chip"
-                    data-name="smoker"
-                    data-value="Ya"
-                  >
-                    Ya</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="smoker"
-                    data-value="Tidak"
-                  >
-                    Tidak
-                  </button>
-                </div>
-              </div>
-              <div class="field">
-                <label>Sudah mendapat BCG?</label>
-                <div class="choices">
-                  <button
-                    type="button"
-                    class="chip"
-                    data-name="bcg"
-                    data-value="Ya"
-                  >
-                    Ya</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="bcg"
-                    data-value="Tidak"
-                  >
-                    Tidak</button
-                  ><button
-                    type="button"
-                    class="chip"
-                    data-name="bcg"
-                    data-value="Tidak Tahu"
-                  >
-                    Tidak Tahu
-                  </button>
-                </div>
-              </div>
-              <div class="field full">
-                <label for="exam_date">Tanggal Pemeriksaan</label
-                ><input id="exam_date" name="exam_date" type="text" readonly />
-              </div>
-              <div class="field full">
-                <label for="notes">Catatan Tambahan</label
-                ><textarea
-                  id="notes"
-                  name="notes"
-                  placeholder="Catatan petugas..."
-                ></textarea>
               </div>
             </div>
           </section>
@@ -921,33 +989,42 @@
           timestamp: new Date().toLocaleString(),
           name: (fd.get("name") || "").trim(),
           age: fd.get("age") || "",
+          weight: fd.get("weight") || "",
+          height: fd.get("height") || "",
           gender: fd.get("gender") || "",
           phone: fd.get("phone") || "",
+          job: fd.get("job") || "",
           address: fd.get("address") || "",
+          location: fd.get("location") || "",
           cough_long: chipGroups["cough_long"] || "",
-          cough_blood: chipGroups["cough_blood"] || "",
-          fever_long: chipGroups["fever_long"] || "",
+          cough_short: chipGroups["cough_short"] || "",
+          fever: chipGroups["fever"] || "",
           night_sweats: chipGroups["night_sweats"] || "",
+          shortness_of_breath: chipGroups["shortness_of_breath"] || "",
+          chest_pain: chipGroups["chest_pain"] || "",
+          lymph_swelling: chipGroups["lymph_swelling"] || "",
+          cough_blood: chipGroups["cough_blood"] || "",
+          appetite_loss: chipGroups["appetite_loss"] || "",
+          fatigue: chipGroups["fatigue"] || "",
           weight_loss: chipGroups["weight_loss"] || "",
           complaint: fd.get("complaint") || "",
           severity: fd.get("severity") || "",
           other_symptoms: fd.get("other_symptoms") || "",
-          prior_tb: chipGroups["prior_tb"] || "",
-          contact_tb: chipGroups["contact_tb"] || "",
-          smoker: chipGroups["smoker"] || "",
-          bcg: chipGroups["bcg"] || "",
-          exam_date: fd.get("exam_date") || "",
-          notes: fd.get("notes") || "",
         };
         return data;
       }
 
       function restoreDraft(obj) {
         try {
+          if (!obj) return;
           if (obj.name) document.getElementById("name").value = obj.name;
           if (obj.age) document.getElementById("age").value = obj.age;
+          if (obj.weight) document.getElementById("weight").value = obj.weight;
+          if (obj.height) document.getElementById("height").value = obj.height;
           if (obj.gender) document.getElementById("gender").value = obj.gender;
           if (obj.phone) document.getElementById("phone").value = obj.phone;
+          if (obj.job) document.getElementById("job").value = obj.job;
+          if (obj.location) document.getElementById("location").value = obj.location;
           if (obj.address)
             document.getElementById("address").value = obj.address;
           if (obj.complaint)
@@ -957,17 +1034,19 @@
           if (obj.other_symptoms)
             document.getElementById("other_symptoms").value =
               obj.other_symptoms;
-          if (obj.notes) document.getElementById("notes").value = obj.notes;
+          // restore chips for all question keys used in gatherData
           [
             "cough_long",
             "cough_blood",
-            "fever_long",
+            "fever",
             "night_sweats",
+            "shortness_of_breath",
+            "chest_pain",
+            "lymph_swelling",
+            "cough_short",
+            "appetite_loss",
+            "fatigue",
             "weight_loss",
-            "prior_tb",
-            "contact_tb",
-            "smoker",
-            "bcg",
           ].forEach((name) => {
             if (obj[name]) {
               const el = document.querySelector(
@@ -982,25 +1061,6 @@
       function renderSummaryHTML(data) {
         const rows = [
           ["Waktu", data.timestamp || ""],
-          ["Nama", data.name || ""],
-          ["Usia", data.age || ""],
-          ["Jenis Kelamin", data.gender || ""],
-          ["Telepon", data.phone || ""],
-          ["Alamat", data.address || ""],
-          ["Batuk >2 minggu", data.cough_long || ""],
-          ["Batuk berdarah", data.cough_blood || ""],
-          ["Demam >2 minggu", data.fever_long || ""],
-          ["Malam berkeringat", data.night_sweats || ""],
-          ["Penurunan berat badan", data.weight_loss || ""],
-          ["Keluhan", data.complaint || ""],
-          ["Keparahan", data.severity || ""],
-          ["Gejala lain", data.other_symptoms || ""],
-          ["Riwayat TB", data.prior_tb || ""],
-          ["Kontak TB", data.contact_tb || ""],
-          ["Perokok", data.smoker || ""],
-          ["BCG", data.bcg || ""],
-          ["Tanggal Pemeriksaan", data.exam_date || ""],
-          ["Catatan", data.notes || ""],
         ];
         const modalHtml = rows
           .map(
@@ -1034,27 +1094,33 @@
       // --------- IFRAME submission (menghindari preflight) ----------
       function submitViaIframe() {
         const data = gatherData();
+        // ensure we use the same field keys as gatherData and avoid duplicate entries
         const values = [
           data.timestamp,
+          document.getElementById("exam_date").value || "",
           data.name,
           data.age,
+          data.weight,
+          data.height,
+          data.job,
+          data.location,
           data.gender,
           data.phone,
           data.address,
           data.cough_long,
+          data.cough_short,
           data.cough_blood,
-          data.fever_long,
+          data.fever,
           data.night_sweats,
+          data.shortness_of_breath,
+          data.chest_pain,
+          data.lymph_swelling,
+          data.appetite_loss,
+          data.fatigue,
           data.weight_loss,
           data.complaint,
           data.severity,
           data.other_symptoms,
-          data.prior_tb,
-          data.contact_tb,
-          data.smoker,
-          data.bcg,
-          data.exam_date,
-          data.notes,
         ];
         const payload = { sheetName: sheetName, values: values };
 
@@ -1092,7 +1158,7 @@
         iframe.addEventListener("load", onLoad);
         hiddenForm.submit();
         showMessage(
-          "Mengirim data... (menggunakan form POST ke Apps Script)",
+          "Mengirim data...",
           "success"
         );
       }
