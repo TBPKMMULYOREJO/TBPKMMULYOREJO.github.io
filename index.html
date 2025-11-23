@@ -1109,17 +1109,20 @@
           data.age
         } | Keluhan: ${data.complaint || "-"}`;
 
-        const serviceID = "default_service";
+        const serviceID = "tbpkmmulyorejo_7";
         const templateID = "template_tbc_email";
 
-        emailjs.sendForm(serviceID, templateID, EMAIL_RECIPIENT).then(
-          () => {
-            console.log("EmailJS sent", response.status, response.text);
-          },
-          (err) => {
-            console.error("EmailJS error", JSON.stringify(err));
-          }
-        );
+        emailjs.send(serviceID, templateID, {
+    			email: EMAIL_RECIPIENT,
+    			user_name: "TBPKM",
+    			message: "Send Email"
+    		})
+    		.then((response) => {
+    			console.log("EmailJS sent", response.status, response.text);
+    		})
+    		.catch((err) => {
+    			console.error("EmailJS error", JSON.stringify(err));
+    		});
       }
 
       // Modal handling
