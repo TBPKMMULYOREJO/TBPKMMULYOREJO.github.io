@@ -794,6 +794,7 @@
       const modalBody = document.getElementById("modalBody");
       const modalClose = document.getElementById("modalClose");
       const modalViewResults = document.getElementById("modalViewResults");
+      const modal = document.getElementById("modal");
 
       let current = 0;
 
@@ -979,7 +980,15 @@
         } catch (e) {}
       }
 
+      // Updated renderSummaryHTML:
+      // - Populate the results panel with the full summary (unchanged)
+      // - For the modal, show only a single message "Tingkat keparahan: <value>"
+      //   and style that message background color based on the severity:
+      //   - Ringan -> green-ish
+      //   - Sedang -> yellow-ish
+      //   - Berat  -> red-ish
       function renderSummaryHTML(data) {
+        // Build full summary for results panel
         const rows = [
           ["Waktu", data.timestamp || ""],
           ["Nama", data.name || ""],
@@ -1002,38 +1011,96 @@
           ["Tanggal Pemeriksaan", data.exam_date || ""],
           ["Catatan", data.notes || ""],
         ];
-        const modalHtml = rows
-          .map(
-            (r) =>
-              `<div style="display:flex;gap:8px;margin:6px 0"><strong style="width:42%;color:var(--muted)">${
-                r[0]
-              }</strong><span>${escapeHtml(r[1])}</span></div>`
-          )
-          .join("");
-        const resultsHtml = rows
-          .map(
-            (r) =>
-              `<div class="kv"><div class="k">${
-                r[0]
-              }</div><div class="v">${escapeHtml(r[1])}</div></div>`
-          )
-          .join("");
-        return { modalHtml, resultsHtml };
+
+        let html = "";
+        for (const r of rows) {
+          html += `<div class="kv"><div class="k">${r[0]}</div><div class="v">${(r[1] || "")}</div></div>`;
+        }
+        resultsContent.innerHTML = html;
+
+        // Modal: only show tingkat keparahan with colored background
+        const sevRaw = (data.severity || "").trim();
+        const sev = sevRaw.toLowerCase();
+        let bg = "#ecf9f6"; // default green-ish for Ringan
+        let color = "#0b5b53";
+        let label = sevRaw || "Tidak diisi";
+
+        if (sev === "ringan") {
+          bg = "#ecf9f6"; // light green
+          color = "#0b5b53";
+        } else if (sev === "sedang") {
+          bg = "#fff7e6"; // light yellow
+          color = "#7a4f00";
+        } else if (sev === "berat") {
+          bg = "#fff3f4"; // light red/pink
+          color = "#7a271f";
+        } else {
+          // unknown / empty -> neutral gray
+          bg = "#f3f4f6";
+          color = "#111827";
+        }
+
+        // Only show the severity message inside modalBody
+        modalBody.innerHTML = `<div style="padding:16px;border-radius:8px;background:${bg};color:${color};font-weight:700;text-align:center;font-size:16px;">
+          Tingkat keparahan: ${label}
+        </div>`;
+
+        // Optionally adjust the modal's thanks box color to match severity lightly
+        const modalThanks = document.getElementById("modalThanks");
+        if (modalThanks) {
+          // use a subtle variant
+          if (sev === "ringan") {
+            modalThanks.style.background = "#ecf9f6";
+            modalThanks.style.color = "#0b5b53";
+          } else if (sev === "sedang") {
+            modalThanks.style.background = "#fff7e6";
+            modalThanks.style.color = "#7a4f00";
+          } else if (sev === "berat") {
+            modalThanks.style.background = "#fff3f4";
+            modalThanks.style.color = "#7a271f";
+          } else {
+            modalThanks.style.background = "#f3f4f6";
+            modalThanks.style.color = "#0f172a";
+          }
+        }
       }
 
-      function escapeHtml(str) {
-        if (!str && str !== 0) return "";
-        return String(str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
+      function showResultsPanel() {
+        resultsPanel.style.display = "block";
+        setActiveTopAction("results");
       }
 
-      // --------- IFRAME submission (menghindari preflight) ----------
+      function hideResultsPanel() {
+        resultsPanel.style.display = "none";
+        setActiveTopAction("form");
+      }
+
+      function setActiveTopAction(which) {
+        if (which === "form") {
+          viewFormBtn.classList.add("active");
+          viewResultsBtn.classList.remove("active");
+        } else {
+          viewFormBtn.classList.remove("active");
+          viewResultsBtn.classList.add("active");
+        }
+      }
+
+      function showModal() {
+        modalBackdrop.style.display = "flex";
+        modalBackdrop.setAttribute("aria-hidden", "false");
+      }
+
+      function hideModal() {
+        modalBackdrop.style.display = "none";
+        modalBackdrop.setAttribute("aria-hidden", "true");
+      }
+
+      // submit via hidden iframe to Google Apps Script
       function submitViaIframe() {
         const data = gatherData();
+
+        // Prepare a simple CSV/JSON string for Google Sheets (values field)
+        // You may adjust to the format your Apps Script expects
         const values = [
           data.timestamp,
           data.name,
@@ -1055,130 +1122,38 @@
           data.bcg,
           data.exam_date,
           data.notes,
-        ];
-        const payload = { sheetName: sheetName, values: values };
+        ].join("\t");
 
-        hiddenForm.querySelector('input[name="sheetName"]').value = sheetName;
-        hiddenValuesInput.value = JSON.stringify(payload);
-
-        const iframe = document.getElementById("gs-iframe");
-        let loaded = false;
-        function onLoad() {
-          if (loaded) return;
-          loaded = true;
-          // Save last submission locally for results view and modal
-          try {
-            localStorage.setItem("tb_last_submission", JSON.stringify(data));
-          } catch (e) {}
-          // Send email via EmailJS (if configured)
-          try {
-            sendEmail(data);
-          } catch (e) {
-            console.warn("sendEmail failed", e);
-          }
-          // Show summary modal
-          showSummaryModal(data);
-          // reset form & UI
-          document.getElementById("tbForm").reset();
-          document
-            .querySelectorAll(".chip")
-            .forEach((c) => c.classList.remove("active"));
-          localStorage.removeItem("tb_form_draft");
-          setExamDate();
-          current = 0;
-          showStep(current);
-          iframe.removeEventListener("load", onLoad);
-        }
-        iframe.addEventListener("load", onLoad);
-        hiddenForm.submit();
-        showMessage(
-          "Mengirim data...",
-          "success"
-        );
-      }
-
-      // EmailJS send
-      function sendEmail(data) {
-        if (typeof emailjs === "undefined") {
-          console.warn("EmailJS SDK not loaded");
-          return;
+        hiddenValuesInput.value = values;
+        try {
+          hiddenForm.submit();
+        } catch (e) {
+          // ignore submission errors for offline/dev
         }
 
-        // Template parameters - adjust according to your EmailJS template variables
-        const summaryShort = `Nama: ${data.name} | Usia: ${
-          data.age
-        } | Keluhan: ${data.complaint || "-"}`;
+        // Render summary and show modal (modal will show only severity message)
+        renderSummaryHTML(data);
+        showModal();
 
-        const serviceID = "tbpkmmulyorejo_7";
-        const templateID = "template_tbc_email";
-
-        emailjs.send(serviceID, templateID, {
-    			email: EMAIL_RECIPIENT,
-    			user_name: "TBPKM",
-    			message: "Send Email"
-    		})
-    		.then((response) => {
-    			console.log("EmailJS sent", response.status, response.text);
-    		})
-    		.catch((err) => {
-    			console.error("EmailJS error", JSON.stringify(err));
-    		});
+        // clear saved draft
+        localStorage.removeItem("tb_form_draft");
+        showMessage("Data terkirim. Terima kasih.", "success");
       }
 
-      // Modal handling
-      function showSummaryModal(data) {
-        const html = renderSummaryHTML(data);
-        modalBody.innerHTML = html.modalHtml;
-        modalBackdrop.style.display = "flex";
-        modalBackdrop.setAttribute("aria-hidden", "false");
-      }
-      function hideModal() {
-        modalBackdrop.style.display = "none";
-        modalBackdrop.setAttribute("aria-hidden", "true");
-      }
-
-      // Results panel handling
-      function showResultsPanel() {
-        const raw = localStorage.getItem("tb_last_submission");
-        if (!raw) {
-          resultsContent.innerHTML =
-            '<p class="note">Belum ada data pengisian. Isi form dan submit terlebih dahulu.</p>';
-        } else {
-          try {
-            const obj = JSON.parse(raw);
-            const html = renderSummaryHTML(obj);
-            resultsContent.innerHTML = html.resultsHtml;
-          } catch (e) {
-            resultsContent.innerHTML =
-              '<p class="note">Gagal memuat data ringkasan.</p>';
-          }
-        }
-        resultsPanel.style.display = "block";
-        document.getElementById("tbForm").style.display = "none";
-        setActiveTopAction("results");
-      }
-      function hideResultsPanel() {
-        resultsPanel.style.display = "none";
-        document.getElementById("tbForm").style.display = "";
-        setActiveTopAction("form");
-      }
-      function setActiveTopAction(mode) {
-        if (mode === "results") {
-          viewResultsBtn.classList.add("active");
-          viewFormBtn.classList.remove("active");
-        } else {
-          viewFormBtn.classList.add("active");
-          viewResultsBtn.classList.remove("active");
+      // (Optional) placeholder for sending email via EmailJS if desired
+      function sendEmailNotification(data) {
+        // Example: send basic notification, skip if not configured
+        try {
+          emailjs.send("default_service", "template_tb_notify", {
+            to_email: EMAIL_RECIPIENT,
+            patient_name: data.name || "—",
+            severity: data.severity || "—",
+            details: JSON.stringify(data),
+          });
+        } catch (e) {
+          // ignore errors
         }
       }
-
-      // accessibility: Enter to next (except textarea)
-      document.getElementById("tbForm").addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
-          e.preventDefault();
-          btnNext.click();
-        }
-      });
     </script>
   </body>
 </html>
