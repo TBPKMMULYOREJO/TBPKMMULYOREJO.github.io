@@ -712,33 +712,316 @@
             </div>
           </section>
 
-          <section class="section" data-index="2" aria-label="Keluhan">
-            <div class="grid">
+          <section class="section" data-index="2" aria-label="Informasi Lain">
+            <div class="questions-grid">
               <div class="field full">
-                <label for="complaint">Deskripsikan keluhan pasien</label
-                ><textarea
-                  id="complaint"
-                  name="complaint"
-                  placeholder="Tuliskan keluhan, durasi..."
-                ></textarea>
+                <label>Anggota keluarga serumah ada yang sakit TBC? <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="tb_contact"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="tb_contact"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
               </div>
-              <div class="field">
-                <label for="severity">Tingkat keparahan</label
-                ><select id="severity" name="severity">
+              <div class="field full">
+                <label>Pernah berada satu ruangan dengan penderita TBC (di tempat kerja/kelas/kamar/asrama/panti/barak, dll) <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="tb_close_contact"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="tb_close_contact"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Apakah pernah tinggal serumah minimal satu malam atau sering tinggal serumah pada siang hari dengan orang yang sakit TBC? <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="tb_household_contact"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="tb_household_contact"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Pernah berobat TBC tuntas <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="tb_treatment_complete"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="tb_treatment_complete"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Pernah berobat TBC tapi tidak tuntas <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="tb_treatment_incomplete"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="tb_treatment_incomplete"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Punya riwayat diabetes melitus/kencing manis <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="diabetes"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="diabetes"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Orang dengan HIV <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="hiv_status"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="hiv_status"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Ibu hamil <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="pregnant"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="pregnant"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Merokok <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="smoking"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="smoking"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Usia 0-14 tahun <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="age_0_14"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="age_0_14"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Lansia (di atas 60 tahun) <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="elderly_60_plus"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="elderly_60_plus"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Apakah jendela rumah dibuka setiap hari untuk sirkulasi udara? <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="window_ventilation"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="window_ventilation"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Berapa orang tidur dalam satu kamar? <span style="color: #d9534f">*</span></label>
+                <select id="people_sleeping_per_room" name="people_sleeping_per_room" required>
                   <option value="">Pilih</option>
-                  <option value="Ringan">Ringan</option>
-                  <option value="Sedang">Sedang</option>
-                  <option value="Berat">Berat</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3 atau lebih">3 atau lebih</option>
                 </select>
               </div>
-              <div class="field">
-                <label for="other_symptoms">Gejala lain</label
-                ><input
-                  id="other_symptoms"
-                  name="other_symptoms"
-                  type="text"
-                  placeholder="mis. sesak napas"
-                />
+              <div class="field full">
+                <label>Apakah ada bagian rumah yang lembap atau berjamur (tembok hitam/cat mengelupas) <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="damp_or_mold"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="damp_or_mold"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Apakah ada penghuni rumah yang merokok di dalam rumah? <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="indoor_smoking"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="indoor_smoking"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+              <div class="field full">
+                <label>Apakah ada anggota keluarga yang tidur di ruangan tanpa jendela? <span style="color: #d9534f">*</span></label>
+                <div class="choices">
+                  <button
+                    type="button"
+                    class="chip"
+                    data-name="no_window_sleeping"
+                    data-value="Ya"
+                  >
+                    Ya</button
+                  ><button
+                    type="button"
+                    class="chip"
+                    data-name="no_window_sleeping"
+                    data-value="Tidak"
+                  >
+                    Tidak
+                  </button>
+                </div>
               </div>
             </div>
           </section>
@@ -782,7 +1065,7 @@
         </div>
 
         <footer>
-          Form ini untuk skrining TBC. Data akan disimpan ke Google Sheets.
+          SIKAT TBC (Skrining Cepat Atasi TBC)
         </footer>
       </div>
     </div>
@@ -987,6 +1270,7 @@
         });
         const data = {
           timestamp: new Date().toLocaleString(),
+          exam_date: fd.get("exam_date") || "",
           name: (fd.get("name") || "").trim(),
           age: fd.get("age") || "",
           weight: fd.get("weight") || "",
@@ -996,17 +1280,37 @@
           job: fd.get("job") || "",
           address: fd.get("address") || "",
           location: fd.get("location") || "",
+          // Keluhan (section 2)
           cough_long: chipGroups["cough_long"] || "",
           cough_short: chipGroups["cough_short"] || "",
+          cough_blood: chipGroups["cough_blood"] || "",
           fever: chipGroups["fever"] || "",
           night_sweats: chipGroups["night_sweats"] || "",
           shortness_of_breath: chipGroups["shortness_of_breath"] || "",
           chest_pain: chipGroups["chest_pain"] || "",
           lymph_swelling: chipGroups["lymph_swelling"] || "",
-          cough_blood: chipGroups["cough_blood"] || "",
           appetite_loss: chipGroups["appetite_loss"] || "",
           fatigue: chipGroups["fatigue"] || "",
           weight_loss: chipGroups["weight_loss"] || "",
+          // Informasi lain (section 3)
+          tb_contact: chipGroups["tb_contact"] || "",
+          tb_close_contact: chipGroups["tb_close_contact"] || "",
+          tb_household_contact: chipGroups["tb_household_contact"] || "",
+          tb_treatment_complete: chipGroups["tb_treatment_complete"] || "",
+          tb_treatment_incomplete: chipGroups["tb_treatment_incomplete"] || "",
+          diabetes: chipGroups["diabetes"] || "",
+          hiv_status: chipGroups["hiv_status"] || "",
+          pregnant: chipGroups["pregnant"] || "",
+          smoking: chipGroups["smoking"] || "",
+          age_0_14: chipGroups["age_0_14"] || "",
+          elderly_60_plus: chipGroups["elderly_60_plus"] || "",
+          window_ventilation: chipGroups["window_ventilation"] || "",
+          people_sleeping_per_room:
+            fd.get("people_sleeping_per_room") || "",
+          damp_or_mold: chipGroups["damp_or_mold"] || "",
+          indoor_smoking: chipGroups["indoor_smoking"] || "",
+          no_window_sleeping: chipGroups["no_window_sleeping"] || "",
+          // legacy/optional fields (if present)
           complaint: fd.get("complaint") || "",
           severity: fd.get("severity") || "",
           other_symptoms: fd.get("other_symptoms") || "",
@@ -1025,29 +1329,48 @@
           if (obj.phone) document.getElementById("phone").value = obj.phone;
           if (obj.job) document.getElementById("job").value = obj.job;
           if (obj.location) document.getElementById("location").value = obj.location;
-          if (obj.address)
-            document.getElementById("address").value = obj.address;
-          if (obj.complaint)
-            document.getElementById("complaint").value = obj.complaint;
-          if (obj.severity)
-            document.getElementById("severity").value = obj.severity;
+          if (obj.address) document.getElementById("address").value = obj.address;
+          if (obj.complaint) document.getElementById("complaint").value = obj.complaint;
+          if (obj.severity) document.getElementById("severity").value = obj.severity;
           if (obj.other_symptoms)
-            document.getElementById("other_symptoms").value =
-              obj.other_symptoms;
-          // restore chips for all question keys used in gatherData
-          [
+            document.getElementById("other_symptoms").value = obj.other_symptoms;
+          if (obj.people_sleeping_per_room)
+            document.getElementById("people_sleeping_per_room").value =
+              obj.people_sleeping_per_room;
+
+          // restore chips for all question keys used in gatherData (section 2 & 3)
+          const chipKeys = [
+            // Section 2 (Keluhan)
             "cough_long",
+            "cough_short",
             "cough_blood",
             "fever",
             "night_sweats",
             "shortness_of_breath",
             "chest_pain",
             "lymph_swelling",
-            "cough_short",
             "appetite_loss",
             "fatigue",
             "weight_loss",
-          ].forEach((name) => {
+            // Section 3 (Informasi Lain)
+            "tb_contact",
+            "tb_close_contact",
+            "tb_household_contact",
+            "tb_treatment_complete",
+            "tb_treatment_incomplete",
+            "diabetes",
+            "hiv_status",
+            "pregnant",
+            "smoking",
+            "age_0_14",
+            "elderly_60_plus",
+            "window_ventilation",
+            "damp_or_mold",
+            "indoor_smoking",
+            "no_window_sleeping"
+          ];
+
+          chipKeys.forEach((name) => {
             if (obj[name]) {
               const el = document.querySelector(
                 `.chip[data-name="${name}"][data-value="${obj[name]}"]`
@@ -1055,7 +1378,9 @@
               if (el) el.classList.add("active");
             }
           });
-        } catch (e) {}
+        } catch (e) {
+          // ignore restore errors
+        }
       }
 
       function renderSummaryHTML(data) {
@@ -1102,11 +1427,12 @@
           data.age,
           data.weight,
           data.height,
-          data.job,
-          data.location,
           data.gender,
           data.phone,
+          data.job,
           data.address,
+          data.location,
+          // Section 2 (Keluhan)
           data.cough_long,
           data.cough_short,
           data.cough_blood,
@@ -1118,6 +1444,24 @@
           data.appetite_loss,
           data.fatigue,
           data.weight_loss,
+          // Section 3 (Informasi Lain)
+          data.tb_contact,
+          data.tb_close_contact,
+          data.tb_household_contact,
+          data.tb_treatment_complete,
+          data.tb_treatment_incomplete,
+          data.diabetes,
+          data.hiv_status,
+          data.pregnant,
+          data.smoking,
+          data.age_0_14,
+          data.elderly_60_plus,
+          data.window_ventilation,
+          data.people_sleeping_per_room,
+          data.damp_or_mold,
+          data.indoor_smoking,
+          data.no_window_sleeping,
+          // legacy/optional
           data.complaint,
           data.severity,
           data.other_symptoms,
