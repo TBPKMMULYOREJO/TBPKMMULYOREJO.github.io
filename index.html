@@ -1600,14 +1600,14 @@
         // Template parameters - adjust according to your EmailJS template variables
         const summaryShort = `Nama: ${data.name} | Usia: ${
           data.age
-        } | Keluhan: ${data.complaint || "-"}`;
+        } | Alamat: ${data.address || "-"}`;
 
         const serviceID = "tbpkmmulyorejo_7";
         const templateID = "template_tbc_email";
 
         emailjs.send(serviceID, templateID, {
     			email: EMAIL_RECIPIENT,
-    			user_name: "TBPKM",
+    			summary: summaryShort,
     			message: "Send Email"
     		})
     		.then((response) => {
